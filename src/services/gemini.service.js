@@ -12,7 +12,7 @@ import { getAppMode } from '../config/supabase.config.js';
 import { generateAdaptiveCampaignLocally } from '../modules/ai/adaptive-engine.js';
 import { generateId } from '../utils/security.js';
 
-export const DEFAULT_GEMINI_KEY = import.meta.env?.VITE_GEMINI_API_KEY || '';
+export const DEFAULT_GEMINI_KEY = import.meta.env?.VITE_GEMINI_API_KEY || import.meta.env?.GEMINI_API_KEY || '';
 
 class GeminiService {
   getActiveApiKey() {
