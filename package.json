@@ -1,0 +1,29 @@
+{
+  "name": "mailora-ai",
+  "version": "1.0.0",
+  "description": "Mailora.ai — Adaptive AI Email Marketing & Creative Studio",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "email-marketing",
+    "ai",
+    "gemini",
+    "supabase",
+    "creative-studio",
+    "templates"
+  ],
+  "author": "Mailora.ai Team",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.1"
+  },
+  "devDependencies": {
+    "vite": "^6.2.0",
+    "vitest": "^3.0.7"
+  }
+}

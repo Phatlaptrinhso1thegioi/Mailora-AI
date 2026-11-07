@@ -1,0 +1,209 @@
+/* ==============================================================================
+   MAILORA AI — CREATIVE STUDIO STYLES
+   Visual Direction: Soft Modern Premium — Lavender Creative Atelier
+   ============================================================================== */
+
+@import './tokens.css';
+
+/* Studio Layout Structure */
+.studio-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Studio Header */
+.studio-header {
+  height: 64px;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+}
+
+.studio-grid {
+  display: grid;
+  grid-template-columns: 240px 1fr 340px;
+  gap: 16px;
+  padding: 16px;
+  flex: 1;
+  max-width: 1720px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (max-width: 1280px) {
+  .studio-grid {
+    grid-template-columns: 220px 1fr 300px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .studio-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Floating AI Prompt Window */
+.floating-prompt-window {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 380px;
+  max-width: calc(100vw - 32px);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-float);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-floating);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: box-shadow var(--transition-fast);
+  touch-action: none;
+}
+
+.floating-prompt-window.minimized {
+  height: 48px !important;
+  width: 220px !important;
+}
+
+.floating-prompt-header {
+  padding: 10px 16px;
+  background: var(--color-secondary-bg);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: grab;
+  user-select: none;
+}
+
+.floating-prompt-header:active {
+  cursor: grabbing;
+}
+
+.floating-prompt-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Canvas Viewports */
+.canvas-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 600px;
+  width: 100%;
+}
+
+.canvas-device-desktop {
+  width: 100%;
+  max-width: 600px;
+  transition: max-width var(--transition-normal);
+}
+
+.canvas-device-mobile {
+  width: 100%;
+  max-width: 375px;
+  transition: max-width var(--transition-normal);
+}
+
+/* 4 Design Direction Cards */
+.variant-card {
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 18px;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.variant-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-md);
+}
+
+.variant-card.selected {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-soft), var(--shadow-md);
+}
+
+/* Inspector Tabs */
+.inspector-tab-nav {
+  display: flex;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-secondary-bg);
+  border-radius: var(--radius-btn) var(--radius-btn) 0 0;
+  overflow: hidden;
+}
+
+.inspector-tab-btn {
+  flex: 1;
+  padding: 10px 12px;
+  font-size: 0.775rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-align: center;
+  transition: all var(--transition-fast);
+  border-bottom: 2px solid transparent;
+}
+
+.inspector-tab-btn.active {
+  background: var(--color-surface);
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+/* Drawers */
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(39, 36, 58, 0.45);
+  backdrop-filter: blur(2px);
+  z-index: var(--z-drawer);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-normal);
+}
+
+.drawer-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.drawer-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 440px;
+  max-width: 100vw;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-modal);
+  z-index: calc(var(--z-drawer) + 1);
+  transform: translateX(100%);
+  transition: transform var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer-panel.active {
+  transform: translateX(0);
+}

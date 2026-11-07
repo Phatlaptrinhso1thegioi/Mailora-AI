@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bắt đầu dùng thử miễn phí — Mailora AI</title>
+    
+    <!-- FAVICON & BRAND ASSETS -->
+    <link rel="icon" type="image/png" href="./mailora-brand/favicon.png">
+    <link rel="shortcut icon" href="./mailora-brand/favicon.ico">
+    <link rel="apple-touch-icon" href="./mailora-brand/apple-icon.png">
+
+    <!-- MODULAR STYLES -->
+    <link rel="stylesheet" href="./assets/css/tokens.css">
+    <link rel="stylesheet" href="./assets/css/global.css">
+    <link rel="stylesheet" href="./assets/css/components.css">
+    <link rel="stylesheet" href="./assets/css/auth.css">
+
+    <!-- TAILWIND CSS & GOOGLE FONTS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #0b0c10;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow-x: hidden;
+            padding: 32px 16px;
+        }
+
+        .signup-page-wrapper {
+            width: 100%;
+            max-width: 520px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .white-signup-modal {
+            width: 100%;
+            background: #ffffff;
+            color: #111217;
+            border-radius: 28px;
+            padding: 40px 36px 36px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.1), 0 0 70px rgba(168, 85, 247, 0.45), 0 0 120px rgba(245, 158, 11, 0.2);
+            text-align: left;
+        }
+
+        .email-pill-display {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f1f1f3;
+            border: 1px solid #e2e2e7;
+            border-radius: 12px;
+            padding: 11px 16px;
+            margin-bottom: 20px;
+        }
+
+        .password-box-wrap {
+            position: relative;
+            width: 100%;
+            margin-bottom: 4px;
+        }
+
+        .password-input {
+            width: 100%;
+            height: 54px;
+            background: #f9f9fb;
+            border: 1.5px solid #d4d4dc;
+            border-radius: 12px;
+            color: #111;
+            padding: 0 48px 0 16px;
+            font-size: 14.5px;
+            font-weight: 500;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .password-input:focus {
+            border-color: #6655E8;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(102, 85, 232, 0.15);
+        }
+
+        .password-toggle-btn {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #71717a;
+            cursor: pointer;
+        }
+
+        .signup-submit-btn {
+            width: 100%;
+            height: 52px;
+            background: #6655E8;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 15px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.1s ease;
+            margin-top: 18px;
+            box-shadow: 0 8px 20px rgba(102, 85, 232, 0.3);
+        }
+
+        .signup-submit-btn:hover {
+            background: #5745D5;
+        }
+
+        .country-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 8px 16px;
+            border-radius: 9999px;
+            font-size: 13px;
+            color: #f4f4f5;
+            margin-top: 32px;
+            cursor: pointer;
+        }
+
+        .auth-footer-text {
+            margin-top: 40px;
+            font-size: 11.5px;
+            color: #71717a;
+            text-align: center;
+            line-height: 1.6;
+            max-width: 440px;
+        }
+
+        .auth-footer-text a {
+            color: #a78bfa;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOGO HEADER GÓC TRÁI -->
+    <a href="landing_page.html" class="absolute top-6 left-6 sm:top-8 sm:left-10 flex items-center gap-2.5 text-decoration-none z-20 group" title="Về trang chủ Mailora">
+        <div class="w-9 h-9 rounded-[10px] bg-[#111] border border-white/20 flex items-center justify-center p-1 overflow-hidden shadow-sm transition-transform group-hover:scale-105">
+            <img 
+                src="./mailora-brand/logo-mark.png" 
+                alt="Mailora Logo" 
+                class="w-full h-full object-contain" 
+                onerror="this.onerror=null; this.src='./mailora_brand/logo-mark.png';" 
+            />
+        </div>
+        <span class="text-[22px] font-extrabold tracking-tight text-white lowercase">mailora</span>
+        <span class="mailora-ai-badge text-[10px] px-2 py-0.5">AI</span>
+    </a>
+
+    <div class="signup-page-wrapper">
+
+        <!-- HỘP TRẮNG ĐĂNG KÝ -->
+        <div class="white-signup-modal">
+            <h1 class="text-[26px] sm:text-[30px] font-extrabold text-zinc-950 text-center tracking-tight leading-tight">
+                Bắt đầu dùng thử miễn phí
+            </h1>
+            <p class="text-[13.5px] text-zinc-600 text-center mt-1.5 mb-7">
+                Khởi tạo tài khoản nhận ngay 50 Credits trải nghiệm Mailora AI Studio (Khám phá 4 phong cách email độc bản)
+            </p>
+
+            <form id="signup-form">
+                <!-- Ô hiển thị email đã nhập & nút thay đổi -->
+                <div class="email-pill-display">
+                    <div>
+                        <span class="block text-[10px] uppercase font-bold text-zinc-400 tracking-wider">Địa chỉ email</span>
+                        <span id="display-user-email" class="text-[14px] font-semibold text-zinc-800">email@example.com</span>
+                    </div>
+                    <a href="index.html" id="change-email-link" class="text-xs font-bold text-purple-700 hover:underline">Thay đổi</a>
+                </div>
+
+                <!-- Input ẩn hoặc trường họ tên -->
+                <div class="mb-4">
+                    <label for="signup-fullname" class="block text-xs font-semibold text-zinc-700 mb-1.5">Họ và tên</label>
+                    <input 
+                        type="text" 
+                        id="signup-fullname" 
+                        placeholder="Nguyễn Văn A" 
+                        class="w-full px-4 py-3 rounded-xl border border-gray-300 text-sm text-gray-900 focus:outline-none focus:border-[#6655E8] focus:ring-4 focus:ring-purple-100"
+                    />
+                </div>
+
+                <!-- Ô mật khẩu -->
+                <div class="password-box-wrap">
+                    <label for="signup-password" class="block text-xs font-semibold text-zinc-700 mb-1.5">Mật khẩu</label>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="signup-password" 
+                            placeholder="Tạo mật khẩu (tối thiểu 6 ký tự)" 
+                            required 
+                            minlength="6"
+                            class="password-input"
+                        />
+                        <button type="button" id="toggle-password" class="password-toggle-btn" aria-label="Hiện/ẩn mật khẩu">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <label for="signup-password-confirm" class="block text-xs font-semibold text-zinc-700 mb-1.5">Xác nhận mật khẩu</label>
+                    <input 
+                        type="password" 
+                        id="signup-password-confirm" 
+                        placeholder="Nhập lại mật khẩu" 
+                        class="w-full px-4 py-3 rounded-xl border border-gray-300 text-sm text-gray-900 focus:outline-none focus:border-[#6655E8] focus:ring-4 focus:ring-purple-100"
+                    />
+                </div>
+
+                <button type="submit" id="btn-submit-signup" class="signup-submit-btn flex items-center justify-center gap-2">
+                    <span>Tạo tài khoản & Nhận 50 Credits</span>
+                </button>
+
+                <button type="button" id="btn-quick-access" class="w-full mt-3 py-3 px-4 bg-zinc-100 hover:bg-zinc-200 active:scale-[0.99] text-zinc-700 text-xs font-semibold rounded-xl transition duration-150 flex items-center justify-center gap-2 cursor-pointer border border-zinc-200">
+                    <svg class="w-4 h-4 text-[#6655E8]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <span>⚡ Vào thẳng Studio ngay (Nhận 50 Credits & Bỏ qua Rate Limit)</span>
+                </button>
+            </form>
+
+            <div class="mt-6 text-center text-xs text-zinc-500">
+                Đã có tài khoản? <a href="login.html" class="text-[#6655E8] font-bold hover:underline">Đăng nhập</a>
+            </div>
+        </div>
+
+        <!-- QUỐC GIA -->
+        <div class="country-pill">
+            <span>🇻🇳 Việt Nam</span>
+            <svg class="w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="auth-footer-text">
+            <p>Bằng việc nhấp vào tạo tài khoản, bạn đồng ý với <a href="#">Điều khoản dịch vụ</a> và <a href="#">Chính sách bảo mật</a> của Mailora AI.</p>
+        </div>
+    </div>
+
+    <!-- MODULAR JAVASCRIPT ENTRY -->
+    <script type="module">
+        import { initSignupPage } from './src/pages/signup.page.js';
+        initSignupPage();
+    </script>
+</body>
+</html>

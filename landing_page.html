@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mailora AI — Nền Tảng Email Marketing Tự Động & Tiếp Thị Toàn Cầu</title>
+
+    <!-- FAVICON & BRAND ASSETS (TỪ FOLDER mailora_brand) -->
+    <link rel="icon" type="image/png" href="./mailora-brand/favicon.png">
+    <link rel="shortcut icon" href="./mailora-brand/favicon.ico">
+    <link rel="apple-touch-icon" href="./mailora-brand/apple-icon.png">
+
+    <!-- TAILWIND CSS CDN & GOOGLE FONTS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Huy hiệu thương hiệu Mailora AI */
+        .mailora-ai-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(90deg, #c084fc 0%, #fbbf24 60%, #f59e0b 100%);
+            color: #000000;
+            font-weight: 800;
+            border-radius: 9999px;
+            line-height: 1;
+            letter-spacing: -0.02em;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.28);
+        }
+
+        /* Thanh cuộn tùy chỉnh */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #09090b; }
+        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+
+        /* Animation Marquee chạy vô tận */
+        @keyframes marqueeScroll {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marqueeScroll 32s linear infinite;
+        }
+        .marquee-mask {
+            -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+        }
+
+        /* Device Stage Mockups (Laptop + iPhone) */
+        .device-stage {
+            position: relative;
+            background: radial-gradient(circle at 60% 40%, rgba(16, 185, 129, 0.15), transparent 70%), #0c0d12;
+            border-radius: 24px;
+            padding: 44px 28px 32px;
+            min-height: 320px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+        }
+        .device-laptop {
+            width: 78%;
+            background: #181920;
+            border-radius: 14px 14px 4px 4px;
+            padding: 10px 10px 0;
+            box-shadow: 0 16px 36px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+        .device-screen {
+            background: #ffffff;
+            color: #111;
+            border-radius: 8px 8px 0 0;
+            padding: 12px;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .device-topbar {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            font-size: 10px;
+            color: #71717a;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #e4e4e7;
+        }
+        .device-topbar i {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #d4d4d8;
+        }
+        .device-mail {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .device-mail small { font-size: 9px; color: #71717a; font-weight: 700; }
+        .device-mail b { font-size: 13px; color: #09090b; }
+        .device-mail p { font-size: 10.5px; color: #52525b; line-height: 1.4; }
+        .device-mail em { font-size: 10px; color: #059669; font-weight: 700; font-style: normal; margin-top: 4px; }
+        .device-base {
+            width: 90%;
+            height: 8px;
+            background: #27272a;
+            margin: 0 auto;
+            border-radius: 0 0 8px 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .device-phone {
+            position: absolute;
+            right: 28px;
+            bottom: 24px;
+            width: 140px;
+            background: #09090b;
+            border-radius: 26px;
+            padding: 6px;
+            box-shadow: 0 18px 40px rgba(0,0,0,0.8);
+            border: 1.5px solid rgba(255,255,255,0.2);
+            transform: rotate(-4deg);
+            transition: transform 0.3s ease;
+        }
+        .device-phone:hover {
+            transform: rotate(0deg) scale(1.04);
+        }
+        .device-phone-screen {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 10px 8px;
+            color: #111;
+            min-height: 190px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .device-phone-screen small { font-size: 8px; color: #a1a1aa; font-weight: 700; }
+        .device-phone-screen b { font-size: 11px; color: #09090b; line-height: 1.2; display: block; margin: 4px 0; }
+        .device-phone-screen p { font-size: 9px; color: #71717a; line-height: 1.35; }
+        .device-sync {
+            position: absolute;
+            right: 32px;
+            top: 26px;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: #34d399;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            backdrop-filter: blur(8px);
+        }
+
+        /* FAQ Accordion */
+        .faq-item details summary::-webkit-details-marker { display: none; }
+        .faq-item details summary { list-style: none; }
+        .faq-item details[open] .faq-icon { transform: rotate(45deg); }
+        .faq-icon { transition: transform 0.25s ease; }
+
+        /* Phổ điểm sáng và Glow */
+        .emerald-glow {
+            box-shadow: 0 0 35px rgba(16, 185, 129, 0.35);
+        }
+        .emerald-glow-sm {
+            box-shadow: 0 0 18px rgba(16, 185, 129, 0.25);
+        }
+    </style>
+  <!-- MODULAR STYLES -->
+  <link rel="stylesheet" href="./assets/css/tokens.css" />
+  <link rel="stylesheet" href="./assets/css/global.css" />
+  <link rel="stylesheet" href="./assets/css/components.css" />
+  <link rel="stylesheet" href="./assets/css/landing.css" />
+</head>
+<body class="bg-black text-white selection:bg-emerald-500 selection:text-black">
+
+    <!-- ===================================================================== -->
+    <!-- 1. HEADER / NAVBAR CỐ ĐỊNH TRONG SUỐT (SHOPIFY STYLE)                 -->
+    <!-- ===================================================================== -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-black/70 backdrop-blur-xl border-b border-zinc-800/60 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Logo & Brand Navigation -->
+            <div class="flex items-center space-x-8 lg:space-x-10">
+                <a href="landing_page.html" class="flex items-center gap-2.5 group" title="Trang chủ Mailora AI">
+                    <div class="w-9 h-9 rounded-xl bg-zinc-900 border border-white/20 p-1 flex items-center justify-center overflow-hidden transition-transform group-hover:scale-105 shadow-sm">
+                        <img 
+                            src="./mailora-brand/logo-mark.png" 
+                            alt="Mailora Logo" 
+                            class="w-full h-full object-contain" 
+                            onerror="this.onerror=null; this.src='./mailora-brand/logo-mark.png';"
+                        />
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="text-2xl font-extrabold tracking-tight text-white lowercase">mailora</span>
+                        <span class="mailora-ai-badge text-[10px] px-2 py-0.5">AI</span>
+                    </div>
+                </a>
+
+                <!-- Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-7 text-[13.5px] font-medium text-zinc-300">
+                    <a href="#features" class="hover:text-emerald-400 transition">Giải pháp</a>
+                    <a href="#assistant" class="hover:text-emerald-400 transition">Trợ lý AI</a>
+                    <a href="#performance" class="hover:text-emerald-400 transition">Hiệu suất</a>
+                    <a href="#journey" class="hover:text-emerald-400 transition">Quy trình</a>
+                    <a href="#pricing" class="hover:text-emerald-400 transition">Bảng giá</a>
+                    <a href="#faq" class="hover:text-emerald-400 transition">Hỏi đáp</a>
+                </nav>
+            </div>
+
+            <!-- Right Actions (Đăng nhập & Bắt đầu miễn phí / Mở AI Studio) -->
+            <div id="landing-auth-nav" class="flex items-center space-x-3 sm:space-x-4">
+                <a href="login.html" class="text-xs sm:text-sm font-medium text-zinc-300 hover:text-white px-3 py-2 rounded-lg hover:bg-white/5 transition">
+                    Đăng nhập
+                </a>
+                <a 
+                    href="sign_up.html" 
+                    class="bg-emerald-500 hover:bg-emerald-400 active:scale-[0.98] text-black font-bold text-xs sm:text-sm px-5 sm:px-6 py-2.5 sm:py-3 rounded-full transition duration-150 shadow-lg shadow-emerald-500/25 flex items-center gap-1.5"
+                >
+                    <span>Bắt đầu miễn phí</span>
+                    <span>&rarr;</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===================================================================== -->
+    <!-- 2. HERO SECTION FULL SCREEN VIDEO BACKGROUND (HỌC HỎI SHOPIFY VIDEO)  -->
+    <!-- ===================================================================== -->
+    <section class="relative w-full min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-16">
+        
+        <!-- Video nền chiếm toàn màn hình -->
+        <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+            <video 
+                class="w-full h-full object-cover scale-105 filter brightness-[0.62] contrast-[1.08]" 
+                autoplay 
+                muted 
+                loop 
+                playsinline
+                poster="./mailora-brand/mailora-logo-transparent.png"
+            >
+                <source src="video.mp4" type="video/mp4">
+                Trình duyệt của bạn không hỗ trợ thẻ video.
+            </video>
+            <!-- Lớp phủ Gradient đa tầng làm nổi bật văn bản -->
+            <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/45 to-black"></div>
+            <div class="absolute inset-0 bg-radial from-transparent via-black/40 to-black/90"></div>
+        </div>
+
+        <!-- Nội dung chính căn giữa màn hình -->
+        <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center space-y-7">
+            
+            <!-- Badge Cuộc thi & Công nghệ -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-lg">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="text-xs font-semibold text-zinc-200">
+                    Vibe Coding 2026 · Nền tảng Email Marketing AI Agentic
+                </span>
+            </div>
+
+            <!-- Tiêu đề lật từ động (Flip/Rotating Headline) như Shopify trong Video -->
+            <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-extrabold tracking-tight leading-[1.08] text-white">
+                Trở thành <br class="hidden sm:inline" />
+                <span id="rotating-keyword" class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-amber-300 inline-block transition-all duration-300">
+                    Đế chế toàn cầu
+                </span>
+            </h1>
+
+            <!-- Phụ đề truyền cảm hứng -->
+            <p class="text-base sm:text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto leading-relaxed font-normal">
+                Ước mơ lớn, tiếp thị nhanh cùng <strong class="text-white font-bold">Mailora AI</strong>. Nền tảng tự động hóa Email Marketing giúp bạn tạo 4 mẫu email đồ họa (Signature Flagship, High-Contrast Atelier, Editorial Storyteller, Conversion Focus), đổi tông giọng và định tuyến giờ vàng vào thẳng <span class="text-emerald-400 font-semibold">Primary Inbox</span>.
+            </p>
+
+            <!-- Hộp nhập Email viên thuốc phong cách Onboarding -->
+            <div class="max-w-xl mx-auto pt-2">
+                <form onsubmit="handleHeroSubmit(event)" class="relative flex flex-col sm:flex-row items-center gap-2.5 p-1.5 sm:p-2 bg-white/10 backdrop-blur-2xl border border-white/25 rounded-2xl sm:rounded-full shadow-2xl">
+                    <div class="w-full sm:flex-1 relative pl-3 sm:pl-4">
+                        <input 
+                            type="email" 
+                            id="hero-email-input" 
+                            placeholder="Nhập địa chỉ email của bạn..." 
+                            required 
+                            class="w-full py-3 bg-transparent text-sm sm:text-base text-white placeholder-zinc-400 focus:outline-none"
+                        />
+                    </div>
+                    <button 
+                        type="submit" 
+                        class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 active:scale-[0.98] text-black font-extrabold text-sm px-7 py-3.5 rounded-xl sm:rounded-full transition duration-150 shadow-md cursor-pointer flex items-center justify-center gap-1.5 shrink-0"
+                    >
+                        <span>Bắt đầu miễn phí</span>
+                        <span>&rarr;</span>
+                    </button>
+                </form>
+
+                <!-- Cam kết trải nghiệm -->
+                <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs text-zinc-400 mt-4 font-medium">
+                    <span class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> 3 ngày dùng thử miễn phí</span>
+                    <span class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> Tặng ngay 50 Credits AI</span>
+                    <span class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> Không cần thẻ tín dụng</span>
+                </div>
+            </div>
+
+            <!-- Các nút hành động phụ -->
+            <div class="flex flex-wrap items-center justify-center gap-4 pt-3">
+                <a 
+                    href="AI_creative_studio.html" 
+                    class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-xs sm:text-sm font-bold text-white transition active:scale-95"
+                >
+                    <span>✨ Khám phá AI Studio</span>
+                </a>
+                <a 
+                    href="#assistant" 
+                    class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-zinc-900/80 hover:bg-zinc-800 text-xs sm:text-sm font-semibold text-zinc-300 hover:text-white transition"
+                >
+                    <span>Xem bản Demo trực tiếp ↓</span>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- 3. BRAND RIBBON: ĐỐI TÁC & HỆ THỐNG GIÁO DỤC FPT                      -->
+    <!-- ===================================================================== -->
+    <section class="border-y border-zinc-800/80 bg-zinc-950/70 py-10 px-4">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="text-center md:text-left">
+                <p class="text-xs uppercase font-extrabold tracking-widest text-emerald-400">ĐỀ ÁN 6 CUỘC THI VIBE CODING 2026</p>
+                <h4 class="text-sm font-bold text-zinc-300 mt-0.5">Được phát triển và đồng hành bởi các đơn vị giáo dục uy tín</h4>
+            </div>
+            
+            <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-10 opacity-80 hover:opacity-100 transition">
+                <img src="./assets/logos/vibecode.png" alt="Vibe Coding AI Contest" class="h-8 sm:h-10 w-auto object-contain filter grayscale hover:grayscale-0 transition" />
+                <img src="./assets/logos/fpt-education.png" alt="FPT Education" class="h-7 sm:h-9 w-auto object-contain filter grayscale hover:grayscale-0 transition" />
+                <img src="./assets/logos/fpt-university.png" alt="FPT University" class="h-7 sm:h-9 w-auto object-contain filter grayscale hover:grayscale-0 transition" />
+                <img src="./assets/logos/fpt-polytechnic.png" alt="FPT Polytechnic" class="h-7 sm:h-9 w-auto object-contain filter grayscale hover:grayscale-0 transition" />
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- 4. CORE FEATURES: SỞ HỮU CHIẾN DỊCH THIẾT KẾ ĐỂ BÁN HÀNG (FRAME 2)   -->
+    <!-- ===================================================================== -->
+    <section id="features" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <span class="text-xs font-extrabold uppercase tracking-widest text-emerald-400">GIẢI PHÁP TIẾP THỊ TOÀN DIỆN</span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                Sở hữu chiến dịch được thiết kế để bán hàng
+            </h2>
+            <p class="text-sm sm:text-base text-zinc-400 leading-relaxed">
+                Khởi tạo email trực tuyến tức thì bằng AI, gom toàn bộ quy trình viết bài, tạo đồ họa và phân tích giờ gửi vào một trung tâm duy nhất.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Card 1: 4 Mẫu Visual Styles Có Sẵn -->
+            <div class="bg-zinc-900/70 border border-zinc-800 rounded-3xl p-7 flex flex-col justify-between hover:border-zinc-700 transition duration-300">
+                <div class="space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-400 border border-purple-500/20 flex items-center justify-center text-xl font-bold">
+                        🎨
+                    </div>
+                    <div>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-purple-400">CHỦ ĐỀ EMAIL TÙY CHỈNH</span>
+                        <h3 class="text-xl font-extrabold text-white mt-1">Tạo 4 mẫu email tuyệt đẹp trong tích tắc</h3>
+                        <p class="text-xs text-zinc-400 mt-2 leading-relaxed">
+                            AI tự động sinh đồng thời 4 phong cách trực quan độc bản: Signature Flagship, High-Contrast Atelier, Editorial Storyteller và Conversion Focus.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Visual preview mini (4 styles) -->
+                <div class="mt-6 pt-5 border-t border-zinc-800/80 grid grid-cols-4 gap-2">
+                    <div class="h-20 rounded-xl overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=400&q=80" alt="Flagship" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/40 flex items-end p-1 text-[8px] font-bold">Flagship</div>
+                    </div>
+                    <div class="h-20 rounded-xl overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=400&q=80" alt="Atelier" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/40 flex items-end p-1 text-[8px] font-bold">Atelier</div>
+                    </div>
+                    <div class="h-20 rounded-xl overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=400&q=80" alt="Story" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/40 flex items-end p-1 text-[8px] font-bold">Story</div>
+                    </div>
+                    <div class="h-20 rounded-xl overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=400&q=80" alt="Convert" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/40 flex items-end p-1 text-[8px] font-bold">Convert</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Tăng trưởng & Doanh số hỗ trợ -->
+            <div class="bg-zinc-900/70 border border-zinc-800 rounded-3xl p-7 flex flex-col justify-between hover:border-zinc-700 transition duration-300">
+                <div class="space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center text-xl font-bold">
+                        📈
+                    </div>
+                    <div>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">DOANH SỐ HỖ TRỢ</span>
+                        <h3 class="text-xl font-extrabold text-white mt-1">Chiến dịch tạo giá trị thật</h3>
+                        <p class="text-xs text-zinc-400 mt-2 leading-relaxed">
+                            Biến hiệu quả email thành tăng trưởng doanh thu vượt trội, đồng thời nhận thêm Credits AI để tiếp tục mở rộng quy mô chiến dịch.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Metric Widget -->
+                <div class="mt-6 pt-5 border-t border-zinc-800/80 space-y-3">
+                    <div class="p-3.5 rounded-2xl bg-black/50 border border-zinc-800 flex items-center justify-between">
+                        <div>
+                            <span class="block text-[10px] uppercase font-bold text-zinc-500">Doanh số hỗ trợ</span>
+                            <span class="text-lg font-black text-emerald-400">700.000+ US$</span>
+                        </div>
+                        <span class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold">+38% YoY</span>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-black/50 border border-zinc-800 flex items-center justify-between">
+                        <div>
+                            <span class="block text-[10px] uppercase font-bold text-zinc-500">Tín dụng AI khởi tạo</span>
+                            <span class="text-sm font-extrabold text-white">+50 Credits Free</span>
+                        </div>
+                        <span class="text-xs text-zinc-400">Tự động cộng</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Kiểm soát mọi thứ tại một nơi -->
+            <div class="bg-zinc-900/70 border border-zinc-800 rounded-3xl p-7 flex flex-col justify-between hover:border-zinc-700 transition duration-300">
+                <div class="space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-400 border border-blue-500/20 flex items-center justify-center text-xl font-bold">
+                        🛡️
+                    </div>
+                    <div>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-blue-400">SPAM GUARD & GIỜ VÀNG</span>
+                        <h3 class="text-xl font-extrabold text-white mt-1">Kiểm soát mọi thứ tại một nơi</h3>
+                        <p class="text-xs text-zinc-400 mt-2 leading-relaxed">
+                            Quét từ khóa nhạy cảm đảm bảo 99.4% vào Hộp thư chính (Primary Inbox) và định tuyến đúng khung giờ vàng mở mail cao nhất của từng ngành.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Checkpoints list -->
+                <div class="mt-6 pt-5 border-t border-zinc-800/80 space-y-2 text-xs text-zinc-300">
+                    <div class="flex items-center gap-2">
+                        <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[10px] font-bold">✓</span>
+                        <span>Quét Spam Score tự động theo chuẩn RFC</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[10px] font-bold">✓</span>
+                        <span>Đổi tông giọng: Trang trọng, Bắt trend hoặc FOMO</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[10px] font-bold">✓</span>
+                        <span>Xuất mã HTML responsive tương thích mọi app mail</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- 5. MEET MAILORA COPILOT: TRỢ LÝ AI ĐẶC QUYỀN (HỌC HỎI SIDEKICK FRAME 3)-->
+    <!-- ===================================================================== -->
+    <section id="assistant" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="bg-gradient-to-br from-zinc-900 via-zinc-950 to-black border border-zinc-800 rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden">
+            
+            <!-- Glow background -->
+            <div class="absolute -top-24 -right-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                
+                <!-- Left: Giới thiệu Sidekick / Copilot -->
+                <div class="lg:col-span-5 space-y-5">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold">
+                        <span>✦</span> GẶP GỠ TRỢ LÝ MAILORA COPILOT
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+                        Vũ khí bí mật cho mọi chiến dịch tiếp thị
+                    </h2>
+                    <p class="text-sm text-zinc-400 leading-relaxed">
+                        Chỉ cần gõ ý tưởng sản phẩm bằng ngôn ngữ tự nhiên, Mailora Copilot sẽ phân tích bối cảnh kinh doanh, tự đặt tiêu đề hấp dẫn, sinh 4 phong cách email độc bản và hoàn thiện giao diện chỉ trong 10 giây.
+                    </p>
+
+                    <!-- Interactive Quick Prompts -->
+                    <div class="space-y-2 pt-2">
+                        <p class="text-xs font-bold text-zinc-300 uppercase tracking-wider">Thử bấm 4 prompt tương ứng 4 phong cách kiến trúc:</p>
+                        <div class="flex flex-col gap-2">
+                            <button 
+                                type="button" 
+                                onclick="setCopilotPrompt(0)" 
+                                class="copilot-btn text-left px-3.5 py-2.5 rounded-xl bg-zinc-800/80 hover:bg-zinc-800 text-xs text-zinc-200 border border-zinc-700/80 transition flex items-center justify-between group"
+                            >
+                                <span>✦ 1. Signature Flagship: Khóa học AI Leadership — Ưu đãi 50%</span>
+                                <span class="text-emerald-400 opacity-0 group-hover:opacity-100 transition">Thử ngay &rarr;</span>
+                            </button>
+                            <button 
+                                type="button" 
+                                onclick="setCopilotPrompt(1)" 
+                                class="copilot-btn text-left px-3.5 py-2.5 rounded-xl bg-zinc-800/80 hover:bg-zinc-800 text-xs text-zinc-200 border border-zinc-700/80 transition flex items-center justify-between group"
+                            >
+                                <span>◐ 2. High-Contrast Atelier: BST Cashmere Thu Đông — Giảm 30%</span>
+                                <span class="text-emerald-400 opacity-0 group-hover:opacity-100 transition">Thử ngay &rarr;</span>
+                            </button>
+                            <button 
+                                type="button" 
+                                onclick="setCopilotPrompt(2)" 
+                                class="copilot-btn text-left px-3.5 py-2.5 rounded-xl bg-zinc-800/80 hover:bg-zinc-800 text-xs text-zinc-200 border border-zinc-700/80 transition flex items-center justify-between group"
+                            >
+                                <span>❦ 3. Editorial Storyteller: Quán Cà Phê Artisan — Tặng voucher</span>
+                                <span class="text-emerald-400 opacity-0 group-hover:opacity-100 transition">Thử ngay &rarr;</span>
+                            </button>
+                            <button 
+                                type="button" 
+                                onclick="setCopilotPrompt(3)" 
+                                class="copilot-btn text-left px-3.5 py-2.5 rounded-xl bg-zinc-800/80 hover:bg-zinc-800 text-xs text-zinc-200 border border-zinc-700/80 transition flex items-center justify-between group"
+                            >
+                                <span>⚡ 4. Conversion Focus: Phần Mềm Quản Lý Tự Động — Kích hoạt ngay</span>
+                                <span class="text-emerald-400 opacity-0 group-hover:opacity-100 transition">Thử ngay &rarr;</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="pt-3">
+                        <a 
+                            href="AI_creative_studio.html" 
+                            class="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-full shadow-lg transition active:scale-95"
+                        >
+                            <span>Mở toàn màn hình trong AI Studio</span>
+                            <span>&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right: Simulated Interactive AI Window -->
+                <div class="lg:col-span-7 bg-black/80 rounded-2xl border border-zinc-700/80 p-5 sm:p-6 shadow-2xl space-y-4">
+                    <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
+                            <span class="w-3 h-3 rounded-full bg-green-500/80 inline-block"></span>
+                            <span class="text-xs font-mono text-zinc-400 ml-2">mailora-copilot-engine.ai</span>
+                        </div>
+                        <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400">
+                            Active Stream
+                        </span>
+                    </div>
+
+                    <!-- Input Box -->
+                    <div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800 flex items-center gap-2">
+                        <span class="text-emerald-400 text-sm">✦</span>
+                        <input 
+                            type="text" 
+                            id="copilot-input-box" 
+                            value="Chiến dịch: Ra mắt khóa học AI Leadership — Ưu đãi 50%" 
+                            readonly 
+                            class="w-full bg-transparent text-xs sm:text-sm text-zinc-200 font-medium focus:outline-none"
+                        />
+                    </div>
+
+                    <!-- Output Card Preview -->
+                    <div class="bg-zinc-900/60 rounded-xl p-4 border border-zinc-800/80 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-emerald-400" id="copilot-out-title">
+                                Mẫu 01: Phong cách Cinematic Dark & FOMO
+                            </span>
+                            <span class="text-[11px] font-bold text-zinc-400" id="copilot-out-openrate">
+                                Open Rate dự kiến: <strong class="text-emerald-400">88.5%</strong>
+                            </span>
+                        </div>
+                        <p class="text-xs text-zinc-300 font-medium" id="copilot-out-subject">
+                            <strong>Subject:</strong> ✨ [Design Rocket] Mở khóa đặc quyền lãnh đạo AI — Ưu đãi 50% chỉ hôm nay!
+                        </p>
+                        <div class="p-3 bg-black/60 rounded-lg text-xs text-zinc-400 space-y-1.5" id="copilot-out-body">
+                            <p>✦ <strong>Thông điệp:</strong> "Dẫn đầu làn sóng chuyển đổi số trước khi đối thủ của bạn kịp bắt đầu."</p>
+                            <p>✦ <strong>CTA Nổi bật:</strong> [ Đăng Ký Khóa Học Ngay &rarr; ] (Màu Emerald Gradient)</p>
+                            <p>✦ <strong>Khung giờ vàng đề xuất:</strong> 10:15 AM (Thứ Ba) — 99.4% Primary Inbox Safe.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between text-xs pt-1">
+                        <span class="text-zinc-500">Đã tự động kiểm duyệt Spam Score: <strong class="text-emerald-400 font-bold">0.1/10 (Cực an toàn)</strong></span>
+                        <a href="AI_creative_studio.html" class="text-emerald-400 hover:underline font-bold">Chỉnh sửa trong Studio &rarr;</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- 6. HIỆU SUẤT & TỐC ĐỘ CHỚP NHOÁNG (HỌC HỎI SHOPIFY FRAME 4)           -->
+    <!-- ===================================================================== -->
+    <section id="performance" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-zinc-800/80">
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <span class="text-xs font-extrabold uppercase tracking-widest text-emerald-400">HOẠT ĐỘNG ỔN ĐỊNH · TỐC ĐỘ CHỚP NHOÁNG</span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                Chất lượng được cam kết trên từng chiến dịch
+            </h2>
+            <p class="text-sm sm:text-base text-zinc-400">
+                Hạ tầng Mailora AI luôn vận hành mạnh mẽ, ngay cả trong những đợt Flash Sale và Black Friday bùng nổ lưu lượng nhất.
+            </p>
+        </div>
+
+        <!-- 4 Thẻ Số Liệu Khủng (Metrics Counter Cards) -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 text-center">
+            
+            <div class="p-6 sm:p-8 rounded-3xl bg-zinc-900/60 border border-zinc-800 space-y-2 hover:border-zinc-700 transition">
+                <span class="block text-3xl sm:text-5xl font-black text-white font-mono counter-num" data-target="175">175</span>
+                <span class="text-xs sm:text-sm font-bold text-emerald-400 uppercase tracking-wider block">QUỐC GIA & VÙNG LÃNH THỔ</span>
+                <p class="text-xs text-zinc-500">Tiếp cận khách hàng toàn cầu trên mọi múi giờ</p>
+            </div>
+
+            <div class="p-6 sm:p-8 rounded-3xl bg-zinc-900/60 border border-zinc-800 space-y-2 hover:border-zinc-700 transition">
+                <span class="block text-3xl sm:text-5xl font-black text-emerald-400 font-mono counter-num" data-target="99.4" data-decimals="1" data-suffix="%">99.4%</span>
+                <span class="text-xs sm:text-sm font-bold text-zinc-300 uppercase tracking-wider block">PRIMARY INBOX RATE</span>
+                <p class="text-xs text-zinc-500">Vượt qua các thuật toán lọc rác nhờ Spam Guard</p>
+            </div>
+
+            <div class="p-6 sm:p-8 rounded-3xl bg-zinc-900/60 border border-zinc-800 space-y-2 hover:border-zinc-700 transition">
+                <span class="block text-3xl sm:text-5xl font-black text-white font-mono counter-num" data-target="48000" data-suffix="+">48,000+</span>
+                <span class="text-xs sm:text-sm font-bold text-purple-400 uppercase tracking-wider block">CHIẾN DỊCH KHỞI TẠO</span>
+                <p class="text-xs text-zinc-500">Xuất bản thành công trên nền tảng Mailora</p>
+            </div>
+
+            <div class="p-6 sm:p-8 rounded-3xl bg-zinc-900/60 border border-zinc-800 space-y-2 hover:border-zinc-700 transition">
+                <span class="block text-3xl sm:text-5xl font-black text-white font-mono counter-num" data-target="320000" data-suffix="+">320,000+</span>
+                <span class="text-xs sm:text-sm font-bold text-blue-400 uppercase tracking-wider block">EMAIL ĐỊNH TUYẾN MỖI TUẦN</span>
+                <p class="text-xs text-zinc-500">Phân phối chuẩn xác vào khung giờ vàng mở mail</p>
+            </div>
+
+        </div>
+
+        <!-- Dải Marquee chạy các ngành hàng lớn -->
+        <div class="mt-16 pt-8 border-t border-zinc-800/60 text-center">
+            <p class="text-[11px] font-bold uppercase tracking-widest text-zinc-500 mb-6">TỐI ƯU KHUNG GIỜ VÀNG VÀ BỘ MẪU CHO MỌI NGÀNH HÀNG</p>
+            <div class="marquee-mask w-full overflow-hidden py-3">
+                <div class="marquee-track flex items-center gap-10 sm:gap-14 text-lg sm:text-2xl font-extrabold text-zinc-600">
+                    <span class="text-zinc-200">E-COMMERCE & BÁN LẺ</span>
+                    <span>✦</span>
+                    <span class="text-emerald-400">SAAS & CÔNG NGHỆ</span>
+                    <span>✦</span>
+                    <span class="text-zinc-200">F&B NHÀ HÀNG & QUÁN ĂN</span>
+                    <span>✦</span>
+                    <span class="text-amber-300">KHÓA HỌC EDTECH</span>
+                    <span>✦</span>
+                    <span class="text-zinc-200">THỜI TRANG & LUXURY</span>
+                    <span>✦</span>
+                    <span class="text-purple-400">FINTECH & DỊCH VỤ SỐ</span>
+                    <span>✦</span>
+                    <span class="text-zinc-200">BẤT ĐỘNG SẢN & NGHỈ DƯỠNG</span>
+                    <span>✦</span>
+                    <span class="text-zinc-200">E-COMMERCE & BÁN LẺ</span>
+                    <span>✦</span>
+                    <span class="text-emerald-400">SAAS & CÔNG NGHỆ</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- 7. DEVICE STAGE: LÀM VIỆC LIỀN MẠCH TRÊN MỌI THIẾT BỊ (TỪ INDEX.HTML) -->
+    <!-- ===================================================================== -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <div class="lg:col-span-5 space-y-6">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-emerald-400">MOBILE-FIRST & OMNICHANNEL</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+                    Làm việc liền mạch trên mọi thiết bị
+                </h2>
+                <p class="text-sm text-zinc-400 leading-relaxed">
+                    Quản lý chiến dịch trên laptop hoặc iPhone, xem trước nội dung hiển thị sắc nét trên cả màn hình nhỏ và giữ trải nghiệm nhất quán trên web, iOS cùng các kênh bán hàng.
+                </p>
+
+                <div class="space-y-3 pt-2 text-xs sm:text-sm text-zinc-300 font-medium">
+                    <div class="flex items-center gap-3">
+                        <span class="w-6 h-6 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold">1</span>
+                        <span>Tự động tối ưu tiêu đề hiển thị trên màn hình khóa điện thoại</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="w-6 h-6 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold">2</span>
+                        <span>Đồng bộ tức thì bản nháp và dữ liệu Brand Kit qua Cloud</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="w-6 h-6 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold">3</span>
+                        <span>Hỗ trợ Dark Mode tự nhiên trên ứng dụng Apple Mail & Gmail</span>
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <a 
+                        href="AI_creative_studio.html" 
+                        class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black font-bold text-xs uppercase tracking-wider hover:bg-zinc-200 transition"
+                    >
+                        <span>Thử nghiệm Live Preview</span>
+                        <span>&rarr;</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="lg:col-span-7">
+                <div class="device-stage" aria-label="Bản xem trước Mailora trên laptop và điện thoại">
+                    
+                    <!-- Laptop Screen Mockup -->
+                    <div class="device-laptop">
+                        <div class="device-screen">
+                            <div class="device-topbar">
+                                <i></i><i></i><i></i> 
+                                <span class="font-mono">mailora.ai/studio</span>
+                            </div>
+                            <div class="device-mail">
+                                <small>CHIẾN DỊCH EMAIL · BẢN NHÁP SỐ 01</small>
+                                <b>Ưu đãi đặc quyền dành riêng cho bạn</b>
+                                <p>Chào bạn, chúng tôi hân hạnh giới thiệu bộ sưu tập mới nhất với ưu đãi 50% chỉ áp dụng trong tuần này.</p>
+                                <em>Gửi chiến dịch qua Global Mesh &rarr;</em>
+                            </div>
+                        </div>
+                        <div class="device-base"></div>
+                    </div>
+
+                    <!-- Phone Screen Mockup -->
+                    <div class="device-phone">
+                        <div class="device-phone-screen">
+                            <div>
+                                <small>9:41 •••</small>
+                                <b>Ưu đãi mới ✨</b>
+                                <p>Mở email để nhận ngay voucher giảm 50% dành cho thành viên VIP.</p>
+                            </div>
+                            <span class="text-[9px] font-bold text-emerald-600">Đã đồng bộ</span>
+                        </div>
+                    </div>
+
+                    <div class="device-sync">↔ Đồng bộ tức thì</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- 8. JOURNEY: QUY TRÌNH 3 BƯỚC NHANH CHÓNG (HỌC HỎI SHOPIFY FRAME 5)    -->
+    <!-- ===================================================================== -->
+    <section id="journey" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-zinc-800/80">
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <span class="text-xs font-extrabold uppercase tracking-widest text-emerald-400">XÂY DỰNG NHANH CHÓNG TRÊN MAILORA</span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                Từ ý tưởng đầu tiên đến chiến dịch sẵn sàng gửi
+            </h2>
+            <p class="text-sm sm:text-base text-zinc-400">
+                Chỉ 3 bước đơn giản để kích hoạt chiến dịch email marketing đạt tỷ lệ chuyển đổi cao nhất.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <div class="bg-zinc-900/60 border border-zinc-800 rounded-3xl p-8 space-y-4 hover:border-zinc-700 transition">
+                <span class="text-3xl font-black text-emerald-400 font-mono">01</span>
+                <span class="block text-xs font-bold text-zinc-500 uppercase tracking-widest">BẮT ĐẦU</span>
+                <h3 class="text-xl font-bold text-white">Chọn mục tiêu & Nhập tên thương hiệu</h3>
+                <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                    Giới thiệu sản phẩm mới, chạy flash sale cuối tuần hay gửi thư cảm ơn chăm sóc khách hàng VIP với vài từ khóa đơn giản.
+                </p>
+            </div>
+
+            <div class="bg-zinc-900/60 border border-zinc-800 rounded-3xl p-8 space-y-4 hover:border-zinc-700 transition">
+                <span class="text-3xl font-black text-emerald-400 font-mono">02</span>
+                <span class="block text-xs font-bold text-zinc-500 uppercase tracking-widest">SÁNG TẠO</span>
+                <h3 class="text-xl font-bold text-white">Để AI tự tạo 4 mẫu email hoàn chỉnh</h3>
+                <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                    Mailora gợi ý tiêu đề thu hút, viết nội dung thuyết phục và áp dụng các tông giọng linh hoạt phù hợp với cá tính thương hiệu của bạn.
+                </p>
+            </div>
+
+            <div class="bg-zinc-900/60 border border-zinc-800 rounded-3xl p-8 space-y-4 hover:border-zinc-700 transition">
+                <span class="text-3xl font-black text-emerald-400 font-mono">03</span>
+                <span class="block text-xs font-bold text-zinc-500 uppercase tracking-widest">PHÁT TRIỂN</span>
+                <h3 class="text-xl font-bold text-white">Định tuyến giờ vàng & Theo dõi</h3>
+                <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                    Xuất bản email vào thời điểm vàng người nhận dễ mở nhất, rồi theo dõi tỷ lệ mở và nhấp chuột để tiếp tục bứt phá doanh số.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Quote Block (Kế thừa từ index.html) -->
+        <div class="mt-14 p-8 rounded-3xl bg-zinc-950 border border-zinc-800 text-center max-w-3xl mx-auto space-y-3">
+            <p class="text-base sm:text-lg italic text-zinc-300">
+                “Mailora giúp chúng tôi tạo chiến dịch phù hợp nhanh hơn và chăm sóc khách hàng nhất quán trên mọi kênh bán hàng.”
+            </p>
+            <p class="text-xs font-bold text-emerald-400 uppercase tracking-widest">
+                — Đội ngũ sáng lập · Khách hàng Mailora AI
+            </p>
+        </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- 9. PRICING: BẢNG GIÁ MINH BẠCH (KẾ THỪA TỪ INDEX.HTML)                 -->
+    <!-- ===================================================================== -->
+    <section id="pricing" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-zinc-800/80">
+        <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+            <span class="text-xs font-extrabold uppercase tracking-widest text-emerald-400">BẢNG GIÁ DỊCH VỤ</span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                Chọn gói đăng ký phù hợp
+            </h2>
+            <p class="text-sm sm:text-base text-zinc-400">
+                Bắt đầu miễn phí 100% — Nâng cấp bất cứ lúc nào để mở khóa toàn bộ sức mạnh AI.
+            </p>
+
+            <!-- Toggle Chu kỳ thanh toán -->
+            <div class="inline-flex items-center gap-3 p-1 rounded-full bg-zinc-900 border border-zinc-800 mt-4 select-none">
+                <button 
+                    type="button" 
+                    id="billing-monthly-btn" 
+                    onclick="switchBilling(false)" 
+                    class="px-4 py-2 rounded-full text-xs font-bold transition bg-emerald-500 text-black shadow-sm"
+                >
+                    Hàng tháng
+                </button>
+                <button 
+                    type="button" 
+                    id="billing-yearly-btn" 
+                    onclick="switchBilling(true)" 
+                    class="px-4 py-2 rounded-full text-xs font-bold transition text-zinc-400 hover:text-white flex items-center gap-1.5"
+                >
+                    <span>Hàng năm</span>
+                    <span class="text-[10px] uppercase font-extrabold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400">Tiết kiệm 17%</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <!-- Gói 1: Free -->
+            <div class="p-7 rounded-3xl bg-zinc-900/60 border border-zinc-800 flex flex-col justify-between space-y-6">
+                <div class="space-y-4">
+                    <span class="text-xs font-extrabold uppercase tracking-wider text-zinc-400">DÀNH CHO CÁ NHÂN</span>
+                    <h3 class="text-2xl font-black text-white">Free</h3>
+                    <div>
+                        <span class="text-3xl sm:text-4xl font-black text-white font-mono">0 ₫</span>
+                        <span class="text-xs text-zinc-400">/ tháng</span>
+                    </div>
+                    <p class="text-xs text-zinc-400">Hoàn hảo để thử nghiệm khả năng tạo email bằng AI.</p>
+                    
+                    <ul class="space-y-2.5 text-xs text-zinc-300 pt-2 border-t border-zinc-800">
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> <strong>50 Credits AI</strong> khởi tạo</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> 4 mẫu email trực quan (4 phong cách)</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Quét Spam Guard cơ bản</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Xuất mã HTML chuẩn responsive</li>
+                    </ul>
+                </div>
+                <a 
+                    href="sign_up.html" 
+                    class="w-full py-3 rounded-full bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs text-center transition block"
+                >
+                    Bắt đầu miễn phí
+                </a>
+            </div>
+
+            <!-- Gói 2: Pro (Khuyên Dùng) -->
+            <div class="p-7 rounded-3xl bg-gradient-to-b from-zinc-900 to-black border-2 border-emerald-500 flex flex-col justify-between space-y-6 relative shadow-2xl shadow-emerald-500/10">
+                <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3.5 py-1 rounded-full bg-emerald-500 text-black text-[10px] font-extrabold uppercase tracking-wider shadow-sm">
+                    PHỔ BIẾN NHẤT
+                </div>
+                <div class="space-y-4">
+                    <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-400">CHO MARKETER CHUYÊN NGHIỆP</span>
+                    <h3 class="text-2xl font-black text-white">Pro</h3>
+                    <div>
+                        <span id="price-pro" class="text-3xl sm:text-4xl font-black text-white font-mono">250.000 ₫</span>
+                        <span id="unit-pro" class="text-xs text-zinc-400">/ tháng</span>
+                    </div>
+                    <p class="text-xs text-zinc-400">Mở rộng quy mô tiếp thị và cá nhân hóa chuyên sâu.</p>
+                    
+                    <ul class="space-y-2.5 text-xs text-zinc-300 pt-2 border-t border-zinc-800">
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> <strong>200 Credits AI</strong> mỗi tháng</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Lưu trữ 10 chiến dịch đồng thời</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Mở khóa 3 tông giọng AI cao cấp</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Định tuyến 100 email giờ vàng/ngày</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Tùy chỉnh Brand Kit cá nhân</li>
+                    </ul>
+                </div>
+                <a 
+                    href="sign_up.html" 
+                    class="w-full py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs text-center transition shadow-lg block"
+                >
+                    Nâng cấp Pro ngay
+                </a>
+            </div>
+
+            <!-- Gói 3: Business -->
+            <div class="p-7 rounded-3xl bg-zinc-900/60 border border-zinc-800 flex flex-col justify-between space-y-6">
+                <div class="space-y-4">
+                    <span class="text-xs font-extrabold uppercase tracking-wider text-zinc-400">CHO ĐỘI NHÓM DOANH NGHIỆP</span>
+                    <h3 class="text-2xl font-black text-white">Business</h3>
+                    <div>
+                        <span id="price-biz" class="text-3xl sm:text-4xl font-black text-white font-mono">500.000 ₫</span>
+                        <span id="unit-biz" class="text-xs text-zinc-400">/ tháng</span>
+                    </div>
+                    <p class="text-xs text-zinc-400">Tối ưu cho các cửa hàng và chiến dịch bán hàng đa kênh.</p>
+                    
+                    <ul class="space-y-2.5 text-xs text-zinc-300 pt-2 border-t border-zinc-800">
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> <strong>500 Credits AI</strong> mỗi tháng</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Lưu trữ 50 chiến dịch</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Định tuyến 300 email giờ vàng/ngày</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Phân tích Open Rate & CTR chuyên sâu</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Ưu tiên hỗ trợ kỹ thuật 24/7</li>
+                    </ul>
+                </div>
+                <a 
+                    href="sign_up.html" 
+                    class="w-full py-3 rounded-full bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs text-center transition block"
+                >
+                    Chọn gói Business
+                </a>
+            </div>
+
+            <!-- Gói 4: Enterprise -->
+            <div class="p-7 rounded-3xl bg-zinc-900/60 border border-zinc-800 flex flex-col justify-between space-y-6">
+                <div class="space-y-4">
+                    <span class="text-xs font-extrabold uppercase tracking-wider text-zinc-400">CHO AGENCY & TỔ CHỨC LỚN</span>
+                    <h3 class="text-2xl font-black text-white">Enterprise</h3>
+                    <div>
+                        <span id="price-ent" class="text-3xl sm:text-4xl font-black text-white font-mono">1.000.000 ₫</span>
+                        <span id="unit-ent" class="text-xs text-zinc-400">/ tháng</span>
+                    </div>
+                    <p class="text-xs text-zinc-400">Hạ tầng chuyên biệt, không giới hạn lưu lượng tiếp thị.</p>
+                    
+                    <ul class="space-y-2.5 text-xs text-zinc-300 pt-2 border-t border-zinc-800">
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> <strong>1.200 Credits AI</strong> mỗi tháng</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Không giới hạn số chiến dịch lưu trữ</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Không giới hạn định tuyến mỗi ngày</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Tích hợp API và Custom Domain</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Hợp đồng & hóa đơn VAT theo yêu cầu</li>
+                    </ul>
+                </div>
+                <a 
+                    href="sign_up.html" 
+                    class="w-full py-3 rounded-full bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs text-center transition block"
+                >
+                    Liên hệ Enterprise
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- 10. FAQ: HỎI ĐÁP THƯỜNG GẶP (KẾ THỪA TỪ INDEX.HTML)                    -->
+    <!-- ===================================================================== -->
+    <section id="faq" class="py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto border-t border-zinc-800/80">
+        <div class="text-center mb-12 space-y-2">
+            <span class="text-xs font-extrabold uppercase tracking-widest text-emerald-400">GIẢI ĐÁP THẮC MẮC</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                Bạn có câu hỏi?
+            </h2>
+            <p class="text-xs sm:text-sm text-zinc-400">Mọi thắc mắc của bạn về nền tảng Mailora AI đều được giải đáp tại đây.</p>
+        </div>
+
+        <div class="space-y-4">
+            
+            <div class="faq-item p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+                <details class="cursor-pointer">
+                    <summary class="flex items-center justify-between font-bold text-sm sm:text-base text-zinc-200">
+                        <span>Mailora AI giúp tôi làm gì?</span>
+                        <span class="faq-icon text-xl text-emerald-400 font-mono">+</span>
+                    </summary>
+                    <p class="text-xs sm:text-sm text-zinc-400 mt-3 pt-3 border-t border-zinc-800/80 leading-relaxed">
+                        Mailora hỗ trợ khởi tạo, thiết kế 4 biến thể trực quan (Signature Flagship, High-Contrast Atelier, Editorial Storyteller, Conversion Focus), đổi tông giọng và quản lý chiến dịch email marketing tự động bằng các mô hình AI tiên tiến nhất hiện nay.
+                    </p>
+                </details>
+            </div>
+
+            <div class="faq-item p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+                <details class="cursor-pointer">
+                    <summary class="flex items-center justify-between font-bold text-sm sm:text-base text-zinc-200">
+                        <span>Tôi có cần kinh nghiệm thiết kế email không?</span>
+                        <span class="faq-icon text-xl text-emerald-400 font-mono">+</span>
+                    </summary>
+                    <p class="text-xs sm:text-sm text-zinc-400 mt-3 pt-3 border-t border-zinc-800/80 leading-relaxed">
+                        Không. Bạn chỉ cần chọn mẫu có sẵn, nhập thông tin thương hiệu hoặc ý tưởng sản phẩm và để Mailora Copilot giúp bạn hoàn thiện cả nội dung lẫn bố cục hình ảnh.
+                    </p>
+                </details>
+            </div>
+
+            <div class="faq-item p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+                <details class="cursor-pointer">
+                    <summary class="flex items-center justify-between font-bold text-sm sm:text-base text-zinc-200">
+                        <span>Tôi có thể kết nối cửa hàng trực tuyến không?</span>
+                        <span class="faq-icon text-xl text-emerald-400 font-mono">+</span>
+                    </summary>
+                    <p class="text-xs sm:text-sm text-zinc-400 mt-3 pt-3 border-t border-zinc-800/80 leading-relaxed">
+                        Có. Mailora được thiết kế để đồng hành cùng các cửa hàng thương mại điện tử, Shopify, website bán hàng và các chiến dịch quảng bá đa kênh.
+                    </p>
+                </details>
+            </div>
+
+            <div class="faq-item p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+                <details class="cursor-pointer">
+                    <summary class="flex items-center justify-between font-bold text-sm sm:text-base text-zinc-200">
+                        <span>Credits AI được sử dụng như thế nào?</span>
+                        <span class="faq-icon text-xl text-emerald-400 font-mono">+</span>
+                    </summary>
+                    <p class="text-xs sm:text-sm text-zinc-400 mt-3 pt-3 border-t border-zinc-800/80 leading-relaxed">
+                        Credits là năng lượng dùng cho các tính năng tạo mới và chỉnh sửa nâng cao bằng AI (tạo 4 mẫu email, đổi giọng điệu văn bản hoặc phân tích chuyên sâu). Các tác vụ xem trước và lưu trữ thông thường hoàn toàn miễn phí.
+                    </p>
+                </details>
+            </div>
+
+            <div class="faq-item p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800">
+                <details class="cursor-pointer">
+                    <summary class="flex items-center justify-between font-bold text-sm sm:text-base text-zinc-200">
+                        <span>Nội dung AI có đảm bảo vào Hộp thư chính (Primary) không?</span>
+                        <span class="faq-icon text-xl text-emerald-400 font-mono">+</span>
+                    </summary>
+                    <p class="text-xs sm:text-sm text-zinc-400 mt-3 pt-3 border-t border-zinc-800/80 leading-relaxed">
+                        Có. Bộ lọc Spam Guard tích hợp sẵn sẽ quét từ khóa nhạy cảm, tối ưu cấu trúc HTML và kiểm tra điểm danh tiếng trước khi gửi, giúp đạt tỷ lệ 99.4% vào Hộp thư chính.
+                    </p>
+                </details>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- 11. FINAL CTA BANNER: BÁN HÀNG HIỆU QUẢ CÙNG MAILORA AI               -->
+    <!-- ===================================================================== -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="bg-gradient-to-r from-emerald-950 via-zinc-900 to-black border border-emerald-500/30 rounded-3xl p-8 sm:p-14 text-center space-y-6 relative overflow-hidden emerald-glow-sm">
+            
+            <div class="max-w-2xl mx-auto space-y-3">
+                <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+                    Bán hàng hiệu quả cùng Mailora AI
+                </h2>
+                <p class="text-sm sm:text-base text-zinc-300">
+                    Bắt đầu miễn phí và tạo chiến dịch tiếp thị đầu tiên của bạn ngay hôm nay.
+                </p>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs font-semibold text-emerald-400">
+                <span>✓ Tạo 4 mẫu email bằng AI (4 phong cách)</span>
+                <span>✓ Cá nhân hóa theo từng khách hàng</span>
+                <span>✓ Theo dõi hiệu quả chiến dịch</span>
+            </div>
+
+            <div class="max-w-md mx-auto pt-2">
+                <form onsubmit="handleBottomSubmit(event)" class="flex flex-col sm:flex-row items-center gap-2 p-1.5 bg-black/60 border border-zinc-700 rounded-2xl sm:rounded-full">
+                    <input 
+                        type="email" 
+                        id="bottom-email-input" 
+                        placeholder="Nhập email của bạn..." 
+                        required 
+                        class="w-full sm:flex-1 py-3 px-4 bg-transparent text-sm text-white placeholder-zinc-500 focus:outline-none"
+                    />
+                    <button 
+                        type="submit" 
+                        class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs px-6 py-3.5 rounded-xl sm:rounded-full transition cursor-pointer"
+                    >
+                        Bắt đầu ngay &rarr;
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- 12. FOOTER CHUẨN MỰC THƯƠNG HIỆU MAILORA                              -->
+    <!-- ===================================================================== -->
+    <footer class="border-t border-zinc-800/80 bg-zinc-950/90 pt-16 pb-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-8 pb-12 border-b border-zinc-800/60 text-xs text-zinc-400">
+            
+            <!-- Col 1: Brand Info -->
+            <div class="col-span-2 space-y-4">
+                <a href="landing_page.html" class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-xl bg-zinc-900 border border-white/20 p-1 flex items-center justify-center overflow-hidden">
+                        <img 
+                            src="./mailora-brand/logo-mark.png" 
+                            alt="Mailora Logo" 
+                            class="w-full h-full object-contain" 
+                            onerror="this.onerror=null; this.src='./mailora-brand/logo-mark.png';"
+                        />
+                    </div>
+                    <span class="text-xl font-extrabold tracking-tight text-white lowercase">mailora</span>
+                    <span class="mailora-ai-badge text-[9px] px-1.5 py-0.5">AI</span>
+                </a>
+                <p class="text-xs text-zinc-400 leading-relaxed max-w-sm">
+                    Nền tảng Email Marketing thông minh được xây dựng cho cuộc thi Vibe Coding 2026. Tự động hóa sáng tạo, chuyển đổi tông giọng và định tuyến giờ vàng.
+                </p>
+                <div class="text-[11px] text-zinc-500">
+                    <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 mr-1.5"></span>
+                    Hệ thống AI Relay hoạt động ổn định
+                </div>
+            </div>
+
+            <!-- Col 2: Nền tảng -->
+            <div class="space-y-3">
+                <h5 class="font-bold text-white uppercase tracking-wider text-[11px]">Nền tảng</h5>
+                <ul class="space-y-2">
+                    <li><a href="AI_creative_studio.html" class="hover:text-emerald-400 transition">AI Creative Studio</a></li>
+                    <li><a href="#features" class="hover:text-emerald-400 transition">4 Mẫu Visual Styles</a></li>
+                    <li><a href="#assistant" class="hover:text-emerald-400 transition">Mailora Copilot</a></li>
+                    <li><a href="#performance" class="hover:text-emerald-400 transition">Spam Guard Scanner</a></li>
+                    <li><a href="#performance" class="hover:text-emerald-400 transition">Định tuyến Giờ vàng</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 3: Giải pháp -->
+            <div class="space-y-3">
+                <h5 class="font-bold text-white uppercase tracking-wider text-[11px]">Giải pháp</h5>
+                <ul class="space-y-2">
+                    <li><a href="#features" class="hover:text-emerald-400 transition">Cho Marketer & Brand</a></li>
+                    <li><a href="#features" class="hover:text-emerald-400 transition">Cho E-Commerce & Bán lẻ</a></li>
+                    <li><a href="#features" class="hover:text-emerald-400 transition">Cho Doanh nghiệp SaaS</a></li>
+                    <li><a href="#features" class="hover:text-emerald-400 transition">Cho Khóa học & F&B</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 4: Tài nguyên & Pháp lý -->
+            <div class="space-y-3">
+                <h5 class="font-bold text-white uppercase tracking-wider text-[11px]">Tài nguyên</h5>
+                <ul class="space-y-2">
+                    <li><a href="#pricing" class="hover:text-emerald-400 transition">Bảng giá & Credits</a></li>
+                    <li><a href="#faq" class="hover:text-emerald-400 transition">Câu hỏi thường gặp</a></li>
+                    <li><a href="login.html" class="hover:text-emerald-400 transition">Đăng nhập tài khoản</a></li>
+                    <li><a href="sign_up.html" class="hover:text-emerald-400 transition">Tạo tài khoản mới</a></li>
+                    <li><a href="#" class="hover:text-emerald-400 transition">Chính sách bảo mật</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="max-w-7xl mx-auto pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-zinc-500 gap-4">
+            <p>© 2026 Mailora AI. Bản quyền thuộc về Đội thi Vibe Coding 2026 (Đề 6: AI Email Marketing Generator).</p>
+            <div class="flex items-center space-x-6">
+                <a href="#" class="hover:text-zinc-300 transition">Điều khoản sử dụng</a>
+                <a href="#" class="hover:text-zinc-300 transition">Chính sách Cookie</a>
+                <a href="mailto:support@mailora.ai" class="hover:text-zinc-300 transition">support@mailora.ai</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===================================================================== -->
+    <!-- 13. JAVASCRIPT LOGIC INTERACTIVE CHO LANDING PAGE                     -->
+    <!-- ===================================================================== -->
+    <script>
+        "use strict";
+
+        // ==========================================
+        // 1. ROTATING HEADLINE (HỌC HỎI SHOPIFY VIDEO)
+        // ==========================================
+        const rotatingKeywords = [
+            "Đế chế toàn cầu",
+            "Nhà tiên phong",
+            "Thương hiệu triệu đô",
+            "Cửa hàng ai cũng ghé"
+        ];
+        let currentKeywordIndex = 0;
+        const rotatingEl = document.getElementById("rotating-keyword");
+
+        function updateRotatingKeyword() {
+            if (!rotatingEl) return;
+            rotatingEl.style.opacity = "0";
+            rotatingEl.style.transform = "translateY(8px)";
+            
+            setTimeout(() => {
+                currentKeywordIndex = (currentKeywordIndex + 1) % rotatingKeywords.length;
+                rotatingEl.textContent = rotatingKeywords[currentKeywordIndex];
+                rotatingEl.style.opacity = "1";
+                rotatingEl.style.transform = "translateY(0)";
+            }, 250);
+        }
+        setInterval(updateRotatingKeyword, 2800);
+
+        // ==========================================
+        // 2. FORM ONBOARDING & ĐIỀU HƯỚNG TỚI SIGN UP
+        // ==========================================
+        function handleHeroSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById("hero-email-input");
+            const emailVal = input ? input.value.trim() : "";
+            if (emailVal) {
+                localStorage.setItem("mailora_user_email", emailVal);
+                window.location.href = `sign_up.html?email=${encodeURIComponent(emailVal)}`;
+            } else {
+                window.location.href = "sign_up.html";
+            }
+        }
+
+        function handleBottomSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById("bottom-email-input");
+            const emailVal = input ? input.value.trim() : "";
+            if (emailVal) {
+                localStorage.setItem("mailora_user_email", emailVal);
+                window.location.href = `sign_up.html?email=${encodeURIComponent(emailVal)}`;
+            } else {
+                window.location.href = "sign_up.html";
+            }
+        }
+
+        // ==========================================
+        // 3. COPILOT / SIDEKICK PROMPT SWITCHER (DEMO - 4 ARCHITECTURES)
+        // ==========================================
+        const copilotDemos = [
+            {
+                prompt: "Chiến dịch: Ra mắt khóa học AI Leadership — Ưu đãi 50%",
+                title: "1. Signature Flagship — Đẳng Cấp & Toàn Diện",
+                openRate: "88.5%",
+                subject: "✨ [Design Rocket] Mở khóa đặc quyền lãnh đạo AI — Ưu đãi 50% chỉ hôm nay!",
+                bodyHtml: `
+                    <p>✦ <strong>Thông điệp:</strong> "Dẫn đầu làn sóng chuyển đổi số trước khi đối thủ của bạn kịp bắt đầu."</p>
+                    <p>✦ <strong>CTA Nổi bật:</strong> [ Đăng Ký Khóa Học Ngay &rarr; ] (Màu Emerald Gradient)</p>
+                    <p>✦ <strong>Khung giờ vàng đề xuất:</strong> 10:15 AM (Thứ Ba) — 99.4% Primary Inbox Safe.</p>
+                `
+            },
+            {
+                prompt: "Chiến dịch: Bộ sưu tập Thời trang Thu Đông — Giảm 30%",
+                title: "2. High-Contrast Atelier — Sắc Sảo Đương Đại",
+                openRate: "92.1%",
+                subject: "🍂 [MONO Studio] Chạm vào mùa thu với chất liệu Cashmere thượng hạng — Giảm 30%!",
+                bodyHtml: `
+                    <p>✦ <strong>Thông điệp:</strong> "Từng sợi len kể câu chuyện về sự ấm áp và thanh lịch không tuổi."</p>
+                    <p>✦ <strong>CTA Nổi bật:</strong> [ Khám Phá Lookbook Thu Đông &rarr; ]</p>
+                    <p>✦ <strong>Khung giờ vàng đề xuất:</strong> 20:00 PM (Thứ Năm) — Tương tác mở mail đạt đỉnh.</p>
+                `
+            },
+            {
+                prompt: "Chiến dịch: Quán Cà Phê Artisan — Tặng voucher mua 1 tặng 1",
+                title: "3. Editorial Storyteller — Tự Sự Truyền Cảm Hứng",
+                openRate: "94.8%",
+                subject: "☕ [BREW & CO.] Bữa sáng thơm hương hạt Arabica — Mua 1 tặng 1 cho tuần mới!",
+                bodyHtml: `
+                    <p>✦ <strong>Thông điệp:</strong> "Bắt đầu ngày làm việc đầy cảm hứng cùng hương vị cà phê rang mộc chuẩn vị."</p>
+                    <p>✦ <strong>CTA Nổi bật:</strong> [ Nhận Mã Voucher Thưởng Thức &rarr; ]</p>
+                    <p>✦ <strong>Khung giờ vàng đề xuất:</strong> 07:45 AM (Thứ Hai) — Tỷ lệ nhấp CTR cao nhất.</p>
+                `
+            },
+            {
+                prompt: "Chiến dịch: Phần Mềm Quản Lý Tự Động — Trải nghiệm miễn phí",
+                title: "4. Conversion Focus — Thúc Đẩy Chuyển Đổi Nhanh",
+                openRate: "96.2%",
+                subject: "⚡ [NexusFlow] Tự động hóa 80% quy trình làm việc — Kích hoạt dùng thử 14 ngày!",
+                bodyHtml: `
+                    <p>✦ <strong>Thông điệp:</strong> "Tiết kiệm 15 giờ làm việc mỗi tuần với hệ thống thông minh tinh gọn."</p>
+                    <p>✦ <strong>CTA Nổi bật:</strong> [ Kích Hoạt Miễn Phí Ngay &rarr; ] (CTR Tối Ưu)</p>
+                    <p>✦ <strong>Khung giờ vàng đề xuất:</strong> 14:30 PM (Thứ Tư) — Tỷ lệ chuyển đổi hành vi cao nhất.</p>
+                `
+            }
+        ];
+
+        function setCopilotPrompt(index) {
+            const data = copilotDemos[index];
+            if (!data) return;
+
+            const inputEl = document.getElementById("copilot-input-box");
+            const titleEl = document.getElementById("copilot-out-title");
+            const openEl = document.getElementById("copilot-out-openrate");
+            const subEl = document.getElementById("copilot-out-subject");
+            const bodyEl = document.getElementById("copilot-out-body");
+
+            if (inputEl) inputEl.value = data.prompt;
+            if (titleEl) titleEl.textContent = data.title;
+            if (openEl) openEl.innerHTML = `Open Rate dự kiến: <strong class="text-emerald-400">${data.openRate}</strong>`;
+            if (subEl) subEl.innerHTML = `<strong>Subject:</strong> ${data.subject}`;
+            if (bodyEl) bodyEl.innerHTML = data.bodyHtml;
+        }
+
+        // ==========================================
+        // 4. PRICING BILLING SWITCH (THÁNG / NĂM)
+        // ==========================================
+        let isYearlyBilling = false;
+        function switchBilling(isYearly) {
+            isYearlyBilling = isYearly;
+            const monthlyBtn = document.getElementById("billing-monthly-btn");
+            const yearlyBtn = document.getElementById("billing-yearly-btn");
+
+            const proPrice = document.getElementById("price-pro");
+            const proUnit = document.getElementById("unit-pro");
+            const bizPrice = document.getElementById("price-biz");
+            const bizUnit = document.getElementById("unit-biz");
+            const entPrice = document.getElementById("price-ent");
+            const entUnit = document.getElementById("unit-ent");
+
+            if (isYearly) {
+                monthlyBtn.className = "px-4 py-2 rounded-full text-xs font-bold transition text-zinc-400 hover:text-white";
+                yearlyBtn.className = "px-4 py-2 rounded-full text-xs font-bold transition bg-emerald-500 text-black shadow-sm flex items-center gap-1.5";
+
+                if (proPrice) proPrice.textContent = "2.500.000 ₫";
+                if (proUnit) proUnit.textContent = "/ năm (tiết kiệm 17%)";
+
+                if (bizPrice) bizPrice.textContent = "5.000.000 ₫";
+                if (bizUnit) bizUnit.textContent = "/ năm (tiết kiệm 17%)";
+
+                if (entPrice) entPrice.textContent = "10.000.000 ₫";
+                if (entUnit) entUnit.textContent = "/ năm (tiết kiệm 17%)";
+            } else {
+                monthlyBtn.className = "px-4 py-2 rounded-full text-xs font-bold transition bg-emerald-500 text-black shadow-sm";
+                yearlyBtn.className = "px-4 py-2 rounded-full text-xs font-bold transition text-zinc-400 hover:text-white flex items-center gap-1.5";
+
+                if (proPrice) proPrice.textContent = "250.000 ₫";
+                if (proUnit) proUnit.textContent = "/ tháng";
+
+                if (bizPrice) bizPrice.textContent = "500.000 ₫";
+                if (bizUnit) bizUnit.textContent = "/ tháng";
+
+                if (entPrice) entPrice.textContent = "1.000.000 ₫";
+                if (entUnit) entUnit.textContent = "/ tháng";
+            }
+        }
+
+        // ==========================================
+        // 5. ANIMATED NUMBERS COUNTER (INTERSECTION OBSERVER)
+        // ==========================================
+        document.addEventListener("DOMContentLoaded", () => {
+            const counters = document.querySelectorAll(".counter-num");
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const el = entry.target;
+                        const target = parseFloat(el.getAttribute("data-target") || "0");
+                        const decimals = parseInt(el.getAttribute("data-decimals") || "0", 10);
+                        const suffix = el.getAttribute("data-suffix") || "";
+                        
+                        let current = 0;
+                        const step = target / 50;
+                        const timer = setInterval(() => {
+                            current += step;
+                            if (current >= target) {
+                                current = target;
+                                clearInterval(timer);
+                            }
+                            el.textContent = current.toLocaleString("vi-VN", {
+                                minimumFractionDigits: decimals,
+                                maximumFractionDigits: decimals
+                            }) + suffix;
+                        }, 25);
+
+                        obs.unobserve(el);
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            counters.forEach(c => observer.observe(c));
+        });
+    </script>
+  <!-- MODULAR JAVASCRIPT ENTRY -->
+  <script type="module">
+    import { initLandingPage } from "./src/pages/landing.page.js";
+    initLandingPage();
+  </script>
+</body>
+</html>

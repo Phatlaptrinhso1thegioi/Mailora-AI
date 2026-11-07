@@ -1,0 +1,78 @@
+/* ==============================================================================
+   MAILORA AI — DESIGN SYSTEM TOKENS
+   Visual Direction: Soft Modern Premium — Lavender Creative Atelier
+   ============================================================================== */
+
+:root {
+  /* Brand Palette */
+  --color-bg: #F7F6FC;
+  --color-secondary-bg: #F1EFF8;
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #FAF9FE;
+  --color-surface-card: #FFFFFF;
+  
+  /* Primary & Accents */
+  --color-primary: #6655E8;
+  --color-primary-hover: #5745D5;
+  --color-primary-soft: #EEEAFE;
+  --color-accent: #A99BF5;
+  
+  /* Text */
+  --color-text-main: #27243A;
+  --color-text-secondary: #777489;
+  --color-text-muted: #9E9BAE;
+  --color-text-inverse: #FFFFFF;
+  
+  /* Borders & Dividers */
+  --color-border: #EAE7F1;
+  --color-border-subtle: #F0EDF6;
+  --color-border-focus: #6655E8;
+  
+  /* Functional / Status */
+  --color-success: #16A36A;
+  --color-success-bg: #E8F7F0;
+  --color-warning: #F59E0B;
+  --color-warning-bg: #FEF3C7;
+  --color-danger: #EF4444;
+  --color-danger-bg: #FEE2E2;
+  --color-info: #3B82F6;
+  --color-info-bg: #EFF6FF;
+
+  /* Typography */
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif-display: 'Instrument Serif', 'Playfair Display', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Rounded Corners */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-btn: 12px;
+  --radius-input: 12px;
+  --radius-card: 18px;
+  --radius-float: 22px;
+  --radius-modal: 24px;
+  --radius-full: 9999px;
+
+  /* Soft Modern Shadows */
+  --shadow-xs: 0 1px 2px rgba(39, 36, 58, 0.04);
+  --shadow-sm: 0 2px 8px rgba(39, 36, 58, 0.06);
+  --shadow-md: 0 8px 24px rgba(39, 36, 58, 0.08);
+  --shadow-lg: 0 16px 36px rgba(102, 85, 232, 0.12);
+  --shadow-modal: 0 24px 60px rgba(39, 36, 58, 0.18);
+  --shadow-glow: 0 0 24px rgba(102, 85, 232, 0.25);
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Z-Index Hierarchy */
+  --z-base: 1;
+  --z-sticky: 20;
+  --z-header: 30;
+  --z-drawer: 40;
+  --z-floating: 50;
+  --z-modal: 60;
+  --z-toast: 70;
+}

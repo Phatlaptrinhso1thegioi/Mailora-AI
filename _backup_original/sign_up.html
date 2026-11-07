@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bắt đầu dùng thử miễn phí — mailora AI</title>
+    
+    <!-- FAVICON & BRAND ASSETS -->
+    <link rel="icon" type="image/png" href="./mailora_brand/favicon.png">
+    <link rel="shortcut icon" href="./mailora_brand/favicon.ico">
+    <link rel="apple-touch-icon" href="./mailora_brand/apple-icon.png">
+
+    <!-- TAILWIND CSS & GOOGLE FONTS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #0b0c10;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow-x: hidden;
+            padding: 32px 16px;
+        }
+
+        /* Huy hiệu chuẩn Mailora AI */
+        .mailora-ai-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(90deg, #b993fe 0%, #f4be58 55%, #f5a623 100%);
+            color: #0b132b;
+            font-weight: 800;
+            border-radius: 9999px;
+            line-height: 1;
+            letter-spacing: -0.02em;
+            box-shadow: 0 2px 8px rgba(245, 166, 35, 0.3);
+        }
+
+        .signup-page-wrapper {
+            width: 100%;
+            max-width: 520px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Khung thẻ trắng giữa màn hình (chuẩn mẫu yêu cầu) */
+        .white-signup-modal {
+            width: 100%;
+            background: #ffffff;
+            color: #111217;
+            border-radius: 28px;
+            padding: 40px 36px 36px;
+            /* Thêm hiệu ứng tỏa sáng hào quang màu tím/xanh nhạt ở đây */
+            box-shadow: 0 25px 60px rgba(0,0,0,0.1), 0 0 70px rgba(168, 85, 247, 0.45), 0 0 120px rgba(245, 158, 11, 0.2);
+            text-align: left;
+        }
+
+        .email-pill-display {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f1f1f3;
+            border: 1px solid #e2e2e7;
+            border-radius: 12px;
+            padding: 11px 16px;
+            margin-bottom: 20px;
+        }
+
+        .password-box-wrap {
+            position: relative;
+            width: 100%;
+            margin-bottom: 4px;
+        }
+
+        .password-input {
+            width: 100%;
+            height: 54px;
+            background: #f9f9fb;
+            border: 1.5px solid #d4d4dc;
+            border-radius: 12px;
+            color: #111;
+            padding: 0 48px 0 16px;
+            font-size: 14.5px;
+            font-weight: 500;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .password-input:focus {
+            border-color: #6366f1;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+
+        .password-toggle-btn {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #71717a;
+            cursor: pointer;
+        }
+
+        .signup-submit-btn {
+            width: 100%;
+            height: 52px;
+            background: #111217;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 15px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.1s ease;
+            margin-top: 18px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .signup-submit-btn:hover {
+            background: #27272a;
+        }
+
+        .country-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 8px 16px;
+            border-radius: 9999px;
+            font-size: 13px;
+            color: #f4f4f5;
+            margin-top: 32px;
+            cursor: pointer;
+        }
+
+        .auth-footer-text {
+            margin-top: 40px;
+            font-size: 11.5px;
+            color: #71717a;
+            text-align: center;
+            line-height: 1.6;
+            max-width: 440px;
+        }
+
+        .auth-footer-text a {
+            color: #a78bfa;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- VECTOR LOGO RIBBON M -->
+    <svg width="0" height="0" style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
+        <defs>
+            <linearGradient id="gL1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#c4b5fd" />
+                <stop offset="100%" stop-color="#8b5cf6" />
+            </linearGradient>
+            <linearGradient id="gL2" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#a78bfa" />
+                <stop offset="100%" stop-color="#f3c68f" />
+            </linearGradient>
+            <linearGradient id="gR1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fde047" />
+                <stop offset="100%" stop-color="#f59e0b" />
+            </linearGradient>
+            <linearGradient id="gR2" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#d97706" />
+                <stop offset="100%" stop-color="#fbbf24" />
+            </linearGradient>
+        </defs>
+        <symbol id="mailora-ribbon-m" viewBox="14 18 92 82">
+            <path d="M20 88 L20 32 C20 25 28 22 33 27 L60 54 L49 65 L34 50 L34 88 C34 93 20 93 20 88 Z" fill="url(#gL1)" />
+            <path d="M22 90 L58 54 L69 65 L33 93 C27 97 19 94 22 90 Z" fill="url(#gL2)" />
+            <path d="M100 88 L100 32 C100 25 92 22 87 27 L52 62 C57 67 63 67 68 62 L86 44 L86 88 C86 93 100 93 100 88 Z" fill="url(#gR1)" />
+            <path d="M98 90 L64 56 L53 67 L87 93 C93 97 101 94 98 90 Z" fill="url(#gR2)" />
+            <path d="M23 26 C27 22 32 23 36 27 L64 55 C60 60 54 60 49 55 L23 29 Z" fill="url(#gL2)" />
+            <path d="M97 26 C93 22 88 23 84 27 L54 57 C58 62 64 62 69 57 L97 29 Z" fill="url(#gR1)" />
+        </symbol>
+    </svg>
+
+    <!-- LOGO HEADER GÓC TRÁI TUYỆT ĐỐI -->
+    <a href="index.html" class="absolute top-6 left-6 sm:top-8 sm:left-10 flex items-center gap-2.5 text-decoration-none z-20 group">
+        <div class="w-9 h-9 rounded-[10px] bg-[#111] border border-white/20 flex items-center justify-center p-1 overflow-hidden shadow-sm transition-transform group-hover:scale-105">
+            <img 
+                src="./mailora_brand/logo-mark.png" 
+                alt="Mailora Logo" 
+                class="w-full h-full object-contain" 
+                onerror="this.onerror=null; this.src='./mailora-brand/logo-mark.png'; if(!this.complete || this.naturalWidth===0){this.style.display='none'; this.nextElementSibling.style.display='block';}" 
+            />
+            <svg class="w-full h-full" style="display:none;"><use href="#mailora-ribbon-m"></use></svg>
+        </div>
+        <span class="text-[22px] font-extrabold tracking-tight text-white lowercase">mailora</span>
+        <span class="mailora-ai-badge text-[10px] px-2 py-0.5">AI</span>
+    </a>
+
+    <div class="signup-page-wrapper">
+
+        <!-- HỘP TRẮNG ĐĂNG KÝ -->
+        <div class="white-signup-modal">
+            <h1 class="text-[26px] sm:text-[30px] font-extrabold text-zinc-950 text-center tracking-tight leading-tight">
+                Bắt đầu dùng thử miễn phí
+            </h1>
+            <p class="text-[13.5px] text-zinc-600 text-center mt-1.5 mb-7">
+                3 ngày miễn phí, sau đó nhận trọn gói AI Studio của mailora
+            </p>
+
+            <form id="signup-form" onsubmit="handleSignup(event)">
+                <!-- Ô hiển thị email đã nhập & nút thay đổi -->
+                <div class="email-pill-display">
+                    <div>
+                        <span class="block text-[10px] uppercase font-bold text-zinc-400 tracking-wider">Địa chỉ email</span>
+                        <span id="display-user-email" class="text-[14px] font-semibold text-zinc-800">email@example.com</span>
+                    </div>
+                    <a href="index.html" id="change-email-link" class="text-xs font-bold text-purple-700 hover:underline">Thay đổi</a>
+                </div>
+
+                <!-- Ô mật khẩu thực tế -->
+                <div class="password-box-wrap">
+                    <input 
+                        type="password" 
+                        id="signup-password" 
+                        placeholder="Tạo mật khẩu" 
+                        required 
+                        minlength="8"
+                        class="password-input"
+                    />
+                    <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility()" aria-label="Hiện/ẩn mật khẩu">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                    </button>
+                </div>
+                <p class="text-[11.5px] text-zinc-500 mt-2 mb-2">Phải có ít nhất 8 ký tự.</p>
+
+                <button type="submit" class="signup-submit-btn">
+                    Tạo tài khoản
+                </button>
+            </form>
+        </div>
+
+        <!-- QUỐC GIA -->
+        <div class="country-pill">
+            <span>🇻🇳 Việt Nam</span>
+            <svg class="w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="auth-footer-text">
+            <p>Bạn cần trợ giúp? <a href="#">Liên hệ hỗ trợ</a></p>
+            <p class="mt-2">Bằng việc nhấp vào tạo tài khoản, bạn đồng ý với <a href="#">Điều khoản dịch vụ</a> và <a href="#">Chính sách bảo mật</a> của mailora AI.</p>
+        </div>
+    </div>
+
+    <script>
+        "use strict";
+
+        // Lấy dữ liệu email thực tế từ URL parameter hoặc localStorage được đồng bộ từ index.html
+        document.addEventListener("DOMContentLoaded", () => {
+            let email = "";
+            try {
+                // 1. Ưu tiên lấy từ query param (?email=...)
+                const urlParams = new URLSearchParams(window.location.search);
+                const queryEmail = urlParams.get("email");
+                if (queryEmail && queryEmail.trim()) {
+                    email = queryEmail.trim();
+                }
+
+                // 2. Nếu không có ở query param, lấy từ mailora_signup_email
+                if (!email) {
+                    const savedEmail = localStorage.getItem("mailora_signup_email");
+                    if (savedEmail && savedEmail.trim()) {
+                        email = savedEmail.trim();
+                    }
+                }
+
+                // 3. Nếu vẫn không có, lấy từ mailora_pending_intent
+                if (!email) {
+                    const pendingIntent = JSON.parse(localStorage.getItem("mailora_pending_intent") || "{}");
+                    if (pendingIntent && pendingIntent.prefillEmail && pendingIntent.prefillEmail.trim()) {
+                        email = pendingIntent.prefillEmail.trim();
+                    }
+                }
+            } catch (_) {}
+
+            const emailSpan = document.getElementById("display-user-email");
+            const changeLink = document.getElementById("change-email-link");
+
+            if (email) {
+                if (emailSpan) emailSpan.textContent = email;
+                if (changeLink) changeLink.href = `index.html?email=${encodeURIComponent(email)}`;
+            } else {
+                if (emailSpan) emailSpan.textContent = "email@example.com";
+                if (changeLink) changeLink.href = "index.html";
+            }
+        });
+
+        function togglePasswordVisibility() {
+            const pwdInput = document.getElementById("signup-password");
+            pwdInput.type = pwdInput.type === "password" ? "text" : "password";
+        }
+
+        function handleSignup(e) {
+            e.preventDefault();
+            const emailSpan = document.getElementById("display-user-email");
+            const email = emailSpan ? emailSpan.textContent.trim() : "";
+            
+            // Lưu phiên đăng nhập thực tế và khởi tạo 50 Credits
+            localStorage.setItem("mailora_active_session", JSON.stringify({
+                email: email,
+                role: "user",
+                credits: 50,
+                loggedInAt: Date.now()
+            }));
+
+            window.location.href = "AI_studio.html";
+        }
+    </script>
+</body>
+</html>

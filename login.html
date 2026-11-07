@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đăng nhập — Mailora AI</title>
+
+  <!-- FAVICON & BRAND ASSETS -->
+  <link rel="icon" type="image/png" href="./mailora-brand/favicon.png" />
+  <link rel="shortcut icon" href="./mailora-brand/favicon.ico" />
+  <link rel="apple-touch-icon" href="./mailora-brand/apple-icon.png" />
+
+  <!-- MODULAR STYLES -->
+  <link rel="stylesheet" href="./assets/css/tokens.css" />
+  <link rel="stylesheet" href="./assets/css/global.css" />
+  <link rel="stylesheet" href="./assets/css/components.css" />
+  <link rel="stylesheet" href="./assets/css/auth.css" />
+
+  <!-- TAILWIND CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- GOOGLE FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body class="bg-gray-950 font-['Plus_Jakarta_Sans',sans-serif] text-white min-h-screen flex flex-col justify-between items-center relative overflow-x-hidden selection:bg-purple-600 selection:text-white px-4 py-8 sm:py-10">
+
+  <!-- ===================================================================== -->
+  <!-- 1. LOGO GÓC TRÊN CÙNG BÊN TRÁI                                       -->
+  <!-- ===================================================================== -->
+  <header class="w-full max-w-7xl flex items-center justify-between z-20">
+    <a href="landing_page.html" class="inline-flex items-center gap-2.5 transition opacity-95 hover:opacity-100 group" title="Về trang chủ Mailora">
+      <img 
+        src="./mailora-brand/mailora-logo-transparent.png" 
+        alt="Mailora Logo" 
+        class="h-8 sm:h-9 w-auto object-contain"
+        onerror="this.onerror=null; this.src='./mailora_brand/mailora-logo-transparent.png'; if(!this.complete || this.naturalWidth===0){this.style.display='none'; document.getElementById('logo-fallback').classList.remove('hidden');}"
+      />
+      <div id="logo-fallback" class="hidden items-center gap-2">
+        <img src="./mailora-brand/logo-mark.png" alt="Mailora" class="h-8 w-auto object-contain" onerror="this.src='./mailora_brand/logo-mark.png'" />
+        <span class="text-2xl font-extrabold tracking-tight text-white lowercase">mailora</span>
+        <span class="mailora-ai-badge">AI</span>
+      </div>
+    </a>
+  </header>
+
+  <!-- ===================================================================== -->
+  <!-- 2. KHUNG ĐĂNG NHẬP                                                    -->
+  <!-- ===================================================================== -->
+  <main class="w-full max-w-md my-auto py-6 z-10">
+    <div class="bg-white text-gray-900 rounded-2xl sm:rounded-3xl p-7 sm:p-9 shadow-2xl shadow-black/50 border border-gray-100">
+      
+      <!-- Tiêu đề & Phụ đề -->
+      <div class="mb-6">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+          Đăng nhập
+        </h1>
+        <p class="text-sm text-gray-500 mt-1.5 font-medium">
+          Tiếp tục truy cập Mailora AI Creative Studio
+        </p>
+      </div>
+
+      <!-- Form Đăng nhập -->
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label for="login-email" class="block text-xs font-semibold text-gray-700 mb-1.5">
+            Email
+          </label>
+          <input 
+            type="email" 
+            id="login-email" 
+            name="email"
+            required 
+            placeholder="name@company.com" 
+            class="w-full px-4 py-3 rounded-xl border border-gray-300 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#6655E8] focus:ring-4 focus:ring-purple-100 transition duration-150"
+          />
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label for="login-password" class="block text-xs font-semibold text-gray-700">
+              Mật khẩu
+            </label>
+            <a href="#" id="forgot-password-link" class="text-xs text-[#6655E8] hover:underline font-medium">
+              Quên mật khẩu?
+            </a>
+          </div>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="login-password" 
+              name="password"
+              required 
+              placeholder="••••••••" 
+              class="w-full px-4 py-3 rounded-xl border border-gray-300 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#6655E8] focus:ring-4 focus:ring-purple-100 transition duration-150 pr-10"
+            />
+            <button 
+              type="button" 
+              id="toggle-password" 
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 text-sm p-1"
+              title="Hiện/Ẩn mật khẩu"
+            >
+              👁
+            </button>
+          </div>
+        </div>
+
+        <!-- Ghi nhớ phiên -->
+        <div class="flex items-center">
+          <input type="checkbox" id="remember-me" checked class="w-4 h-4 text-[#6655E8] rounded border-gray-300 focus:ring-[#6655E8]" />
+          <label for="remember-me" class="ml-2 text-xs text-gray-600 font-medium">Ghi nhớ phiên đăng nhập</label>
+        </div>
+
+        <!-- Nút bấm chính: Đăng nhập -->
+        <button 
+          type="submit" 
+          id="btn-submit-login"
+          class="w-full py-3.5 px-4 bg-[#6655E8] hover:bg-[#5745D5] active:scale-[0.99] text-white text-sm font-bold rounded-xl transition duration-150 shadow-md shadow-purple-500/20 cursor-pointer flex items-center justify-center gap-2"
+        >
+          <span>Đăng nhập vào Studio</span>
+        </button>
+      </form>
+
+      <!-- Dải phân cách 'hoặc' -->
+      <div class="relative my-6">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-gray-200"></div>
+        </div>
+        <div class="relative flex justify-center text-xs">
+          <span class="bg-white px-3 text-gray-400 font-medium">hoặc đăng nhập nhanh</span>
+        </div>
+      </div>
+
+      <!-- Tùy chọn đăng nhập nhanh (Google OAuth / Demo) -->
+      <div class="space-y-3">
+        <button 
+          type="button" 
+          id="btn-demo-login"
+          class="w-full py-3 px-4 bg-gray-100 hover:bg-gray-200 active:scale-[0.99] text-gray-800 text-sm font-semibold rounded-xl transition duration-150 flex items-center justify-center gap-2.5 cursor-pointer"
+        >
+          <svg class="w-4 h-4 text-[#6655E8]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+          </svg>
+          <span>Trải nghiệm Chế độ Demo (Không cần mật khẩu)</span>
+        </button>
+      </div>
+
+      <!-- Footer của thẻ: Link Bắt đầu -->
+      <div class="mt-8 pt-5 border-t border-gray-100 text-center">
+        <p class="text-xs sm:text-sm text-gray-500 font-medium">
+          Bạn mới sử dụng Mailora? 
+          <a href="sign_up.html" class="text-[#6655E8] hover:text-[#5745D5] font-semibold hover:underline inline-flex items-center gap-0.5 ml-1">
+            <span>Bắt đầu dùng thử miễn phí</span>
+            <span>&rarr;</span>
+          </a>
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- 3. FOOTER                                                             -->
+  <!-- ===================================================================== -->
+  <footer class="w-full max-w-xl text-center space-y-2 z-20">
+    <p class="text-[11px] leading-relaxed text-gray-500 max-w-md mx-auto">
+      Bằng việc đăng nhập, bạn đồng ý với <a href="#" class="underline hover:text-gray-300">Điều khoản sử dụng</a> và <a href="#" class="underline hover:text-gray-300">Chính sách bảo mật</a> của Mailora.ai.
+    </p>
+  </footer>
+
+  <!-- MODULAR JAVASCRIPT ENTRY -->
+  <script type="module">
+    import { initLoginPage } from './src/pages/login.page.js';
+    initLoginPage();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mailora AI — Khởi tạo chiến dịch Email Marketing bằng AI</title>
+    
+    <!-- FAVICON & BRAND ASSETS -->
+    <link rel="icon" type="image/png" href="./mailora_brand/favicon.png">
+    <link rel="shortcut icon" href="./mailora_brand/favicon.ico">
+    <link rel="apple-touch-icon" href="./mailora_brand/apple-icon.png">
+
+    <!-- TAILWIND CSS & GOOGLE FONTS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        html {
+            min-height: 100%;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #090a0e;
+            color: #ffffff;
+            overflow-x: hidden;
+            overflow-y: scroll !important;
+            min-height: 100vh;
+            height: auto !important;
+            width: 100%;
+            background: #fff;
+            position: relative;
+            user-select: none;
+        }
+
+        /* Huy hiệu [AI] chuẩn nhận diện mailora */
+        .mailora-ai-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(90deg, #b993fe 0%, #f4be58 55%, #f5a623 100%);
+            color: #0b132b;
+            font-weight: 800;
+            border-radius: 9999px;
+            line-height: 1;
+            letter-spacing: -0.02em;
+            box-shadow: 0 2px 8px rgba(245, 166, 35, 0.3);
+        }
+
+        /* ================= 1. KHUNG VIEWPORT CHÍNH ================= */
+        .hero-onboarding-viewport {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #090a0e;
+        }
+
+        /* ================= 2. BACKGROUND CHẠY CHÉO QUA LẠI LẤP KÍN TUYỆT ĐỐI ================= */
+        .masonry-stage {
+            position: absolute;
+            inset: -70%;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            opacity: 0;
+            transform: scale(1.12);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        body.is-loaded .masonry-stage {
+            opacity: 1;
+            transform: scale(1.02);
+        }
+
+        .masonry-tilted-board {
+            display: flex;
+            gap: 26px;
+            transform: rotate(-16deg) scale(1.15);
+            transform-origin: center center;
+            will-change: transform;
+        }
+
+        .masonry-col-viewport {
+            width: 380px;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .masonry-col-track {
+            display: flex;
+            flex-direction: column;
+            gap: 26px;
+            will-change: transform;
+        }
+
+        /* Các cột chạy chéo qua lại (lên xuống mượt mà) */
+        .track-direction-up-1 { animation: diagonalSlideUp 38s ease-in-out infinite alternate; }
+        .track-direction-down-1 { animation: diagonalSlideDown 44s ease-in-out infinite alternate; }
+        .track-direction-up-2 { animation: diagonalSlideUp 40s ease-in-out infinite alternate; animation-delay: -5s; }
+        .track-direction-down-2 { animation: diagonalSlideDown 36s ease-in-out infinite alternate; animation-delay: -8s; }
+
+        @keyframes diagonalSlideUp {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(0, -35%, 0); }
+        }
+
+        @keyframes diagonalSlideDown {
+            0% { transform: translate3d(0, -35%, 0); }
+            100% { transform: translate3d(0, 0, 0); }
+        }
+
+        .wall-card {
+            width: 100%;
+            border-radius: 26px;
+            overflow: hidden;
+            box-shadow: 0 24px 50px rgba(0, 0, 0, 0.62);
+            position: relative;
+            background: #18181b;
+            flex-shrink: 0;
+        }
+
+        /* Lớp phủ vignette làm nổi bật cụm hộp thoại trung tâm */
+        .hero-vignette-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            background: radial-gradient(
+                circle at 50% 50%,
+                rgba(9, 10, 14, 0.12) 0%,
+                rgba(9, 10, 14, 0.45) 58%,
+                rgba(9, 10, 14, 0.78) 100%
+            );
+            pointer-events: none;
+        }
+
+        /* ================= 3. CỤM TRUNG TÂM: HIỆU ỨNG MỜ DẦN RÕ DẦN (FADE-IN) ================= */
+        .center-onboarding-stack {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 446px;
+            padding: 0 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- 3A. LOGO MAILORA AI --- */
+        .brand-intro-wrapper {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 26px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .brand-icon-box {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: #0b132b;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            flex-shrink: 0;
+            opacity: 0;
+            transform: scale(0.65) translateY(12px);
+            transition: 
+                opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.08s,
+                transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) 0.08s;
+        }
+
+        .brand-wordmark-reveal {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            overflow: hidden;
+            max-width: 0px;
+            opacity: 0;
+            margin-left: 0px;
+            transform: translateX(-12px);
+            white-space: nowrap;
+            transition:
+                max-width 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.35s,
+                opacity 0.55s ease 0.38s,
+                margin-left 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.35s,
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.35s;
+        }
+
+        body.is-loaded .brand-icon-box {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        body.is-loaded .brand-wordmark-reveal {
+            max-width: 200px;
+            opacity: 1;
+            margin-left: 10px;
+            transform: translateX(0);
+        }
+
+        /* --- 3B. THẺ TRẮNG PHÍA TRÊN & CHỮ BÊN TRONG MỜ DẦN RÕ DẦN --- */
+        .onboarding-white-card {
+            width: 100%;
+            background: #ffffff;
+            color: #090a0f;
+            border-radius: 26px;
+            padding: 32px 34px 30px;
+            box-shadow: 0 22px 60px rgba(0, 0, 0, 0.48);
+            text-align: left;
+            opacity: 0;
+            transform: translate3d(0, 78px, 0) scale(0.97);
+            transition:
+                opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s,
+                transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+            will-change: opacity, transform;
+        }
+
+        body.is-loaded .onboarding-white-card {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) scale(1);
+        }
+
+        .onboarding-white-card h1,
+        .onboarding-white-card p {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.7s ease 0.4s, transform 0.7s ease 0.4s;
+        }
+        body.is-loaded .onboarding-white-card h1,
+        body.is-loaded .onboarding-white-card p {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        body.is-loaded .onboarding-white-card p {
+            transition-delay: 0.5s;
+        }
+
+        /* --- 3C. THẺ ĐEN KÍNH MỜ PHÍA DƯỚI & NỘI DUNG MỜ DẦN RÕ DẦN --- */
+        .onboarding-dark-card {
+            width: 100%;
+            margin-top: 8px;
+            background: rgba(18, 18, 22, 0.88);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: 26px;
+            padding: 22px 30px 26px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            box-shadow: 0 28px 70px rgba(0, 0, 0, 0.75);
+            text-align: left;
+            position: relative;
+            opacity: 0;
+            transform: translate3d(0, 96px, 0) scale(0.97);
+            transition:
+                opacity 0.82s cubic-bezier(0.16, 1, 0.3, 1) 0.38s,
+                transform 0.94s cubic-bezier(0.22, 1, 0.36, 1) 0.38s;
+            will-change: opacity, transform;
+        }
+
+        body.is-loaded .onboarding-dark-card {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) scale(1);
+        }
+
+        .onboarding-dark-card > * {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.7s ease 0.6s, transform 0.7s ease 0.6s;
+        }
+        body.is-loaded .onboarding-dark-card > * {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ================= STICKY / FLOATING EMAIL BAR (KHUNG 2 TRỞ ĐI) ================= */
+        .sticky-email-bar {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(120px);
+            width: min(446px, calc(100vw - 32px));
+            background: rgba(18, 18, 22, 0.95);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: 24px;
+            padding: 16px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+        }
+
+        .sticky-email-bar.is-visible {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .sticky-email-inner {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sticky-email-text {
+            flex-shrink: 0;
+        }
+
+        .sticky-email-text h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .sticky-email-text p {
+            font-size: 11px;
+            color: #a1a1aa;
+            margin-top: 2px;
+        }
+
+        .sticky-form-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        /* ================= 4. Ô NHẬP EMAIL VIÊN THUỐC & NHÃN NỔI ================= */
+        .email-pill-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 50px;
+            padding: 0 8px 0 16px;
+            border-radius: 9999px;
+            background: rgba(24, 24, 28, 0.96);
+            border: 2px solid #7c3aed;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.24);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .email-pill-box:focus-within {
+            border-color: #9333ea;
+            box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.36);
+            background: rgba(28, 28, 34, 0.98);
+        }
+
+        .floating-input-wrap {
+            position: relative;
+            flex: 1;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            min-width: 0;
+            padding-right: 8px;
+        }
+
+        .floating-email-input {
+            width: 100%;
+            background: transparent;
+            color: #ffffff;
+            font-size: 13.5px;
+            font-weight: 500;
+            border: none;
+            outline: none;
+            padding-top: 14px;
+            opacity: 0;
+            transition: opacity 0.15s ease;
+        }
+
+        .floating-email-input:focus,
+        .floating-email-input:not(:placeholder-shown) {
+            opacity: 1;
+        }
+
+        .floating-email-label {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 13.5px;
+            font-weight: 500;
+            color: #a1a1aa;
+            pointer-events: none;
+            transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .floating-email-input:focus + .floating-email-label,
+        .floating-email-input:not(:placeholder-shown) + .floating-email-label {
+            top: 14px;
+            font-size: 10.5px;
+            color: #a1a1aa;
+        }
+
+        /* Hộp thoại Autofill 3 dòng */
+        .autofill-dropdown {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 18px;
+            width: 242px;
+            background: #202124;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 12px;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.72);
+            padding: 5px 0;
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-4px);
+            transition: all 0.16s ease;
+        }
+
+        .autofill-dropdown.is-open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* Thanh Loading trên đỉnh khi chuyển trang */
+        #top-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: linear-gradient(90deg, #8b5cf6, #ec4899, #f59e0b);
+            z-index: 9999;
+            transition: width 0.3s ease;
+        }
+
+        /* Shopify-inspired product sections adapted for Mailora AI */
+        .mailora-sections { position:relative; z-index:2; display:block; width:100%; background:#fff; color:#101114; font-family:'Plus Jakarta Sans',sans-serif; }
+        .brand-ribbon { min-height:130px; display:flex; align-items:center; justify-content:space-evenly; gap:36px; padding:30px 5vw; overflow:hidden; border-bottom:1px solid #eee; flex-wrap:wrap; }
+        .brand-logo-item { height:clamp(38px,4.2vw,54px); max-width:200px; width:auto; object-fit:contain; transition:transform .25s ease; }
+        .brand-logo-item:hover { transform:scale(1.06); }
+        .brand-ribbon span { color:#161616; font-size:clamp(17px,2vw,27px); font-weight:800; letter-spacing:-1.2px; white-space:nowrap; }
+        .brand-ribbon span:nth-child(2n) { font-family:Georgia,serif; font-weight:700; letter-spacing:-.8px; }
+        .section-wrap { width:min(1320px,92vw); margin:0 auto; padding:88px 0; }
+        .feature-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:30px; }
+        .feature-card h2 { margin:20px 12px 6px; font-size:clamp(22px,2vw,29px); font-weight:600; letter-spacing:-1px; }
+        .feature-card p { margin:0 12px; color:#737373; font-size:clamp(16px,1.5vw,22px); line-height:1.5; }
+        .feature-visual { position:relative; height:clamp(300px,35vw,490px); overflow:hidden; border-radius:28px; background:#f2f2f4; }
+        .theme-wall { position:absolute; inset:0; display:flex; align-items:center; gap:10px; padding:30px; transform:rotate(-7deg) scale(1.07); }
+        .theme-wall img { width:30%; height:68%; object-fit:cover; border-radius:12px; box-shadow:0 14px 30px #0002; }
+        .theme-wall img:nth-child(2) { height:84%; }
+        .theme-wall img:nth-child(3) { height:74%; }
+        .feature-chip { position:absolute; left:22px; top:20px; padding:12px 16px; border-radius:99px; background:#fff; color:#111; font-size:11px; font-weight:700; letter-spacing:.04em; }
+        .sales-widget { position:absolute; width:60%; height:58%; left:20%; top:20%; padding:30px; border-radius:22px; background:#fff; box-shadow:0 10px 30px #0001; }
+        .sales-widget small,.credit-widget small { display:block; color:#555; font-size:15px; }
+        .sales-widget strong,.credit-widget strong { display:block; margin-top:8px; font-size:26px; }
+        .sales-curve { position:absolute; inset:18% 0 0; width:100%; height:82%; }
+        .credit-widget { position:absolute; right:6%; bottom:17%; padding:20px 24px; border-radius:16px; background:#fff; box-shadow:0 8px 20px #0002; }
+        .credit-widget strong { color:#15836f; }
+        .lower-feature-grid { padding-top:24px; }
+        .assistant-preview,.channel-visual { position:relative; min-height:clamp(300px,35vw,490px); display:grid; place-items:center; overflow:hidden; border-radius:28px; background:#f2f2f4; }
+        .assistant-preview { background:radial-gradient(circle at 50% 48%,#d9c8ff 0,transparent 43%),#f2f2f4; }
+        .assistant-bubble { width:min(310px,80%); padding:34px 26px; border-radius:24px; background:#fff; color:#24202c; text-align:center; box-shadow:0 20px 60px #0001; }
+        .assistant-bubble b { display:block; margin-top:16px; color:#7847d9; font-size:20px; }
+        .channel-visual { background:radial-gradient(ellipse at 50% 28%,#fff 0,#f4f2f8 43%,#eeeaf4 100%); }
+        .device-stage { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:62px 7% 24px; }
+        .device-laptop { position:relative; width:76%; padding:10px 10px 13px; border:2px solid #d8d5df; border-radius:18px 18px 12px 12px; background:linear-gradient(145deg,#fff,#e8e6ed); box-shadow:0 25px 45px #33254b24; transform:perspective(900px) rotateY(-7deg); animation:device-in .7s both; }
+        .device-screen { min-height:190px; padding:13px; border-radius:9px; background:#fff; }
+        .device-topbar { display:flex; align-items:center; gap:5px; color:#8c8797; font-size:8px; }
+        .device-topbar i { width:6px; height:6px; border-radius:50%; background:#d8d3e2; }
+        .device-mail { margin-top:14px; padding:13px; border-radius:10px; background:linear-gradient(120deg,#f4efff,#fff); }
+        .device-mail b { display:block; margin:6px 0; color:#292336; font-size:14px; }
+        .device-mail small { color:#777183; font-size:9px; }
+        .device-mail em { display:inline-block; margin-top:8px; padding:5px 9px; border-radius:20px; background:#7545dc; color:#fff; font-size:8px; font-style:normal; }
+        .device-base { width:112%; height:10px; margin:0 0 0 -6%; border-radius:2px 2px 12px 12px; background:linear-gradient(#d4d1da,#aaa6b2); }
+        .device-phone { position:absolute; right:9%; bottom:13%; width:22%; max-width:104px; min-width:76px; padding:6px; border:2px solid #d7d3de; border-radius:22px; background:#17151d; box-shadow:0 16px 35px #2116333b; animation:phone-in .8s .16s both; }
+        .device-phone-screen { min-height:140px; padding:16px 7px 8px; border-radius:16px; background:#fff; }
+        .device-phone-screen b { display:block; margin:8px 0 5px; color:#282333; font-size:9px; }
+        .device-phone-screen small { color:#777183; font-size:7px; line-height:1.4; }
+        .device-phone-screen i { display:block; height:38px; margin-top:8px; border-radius:8px; background:linear-gradient(135deg,#a882ff,#6735d3); }
+        .device-sync { position:absolute; right:8%; top:27%; padding:8px 11px; border:1px solid #fff; border-radius:20px; background:#fff; color:#693bd0; box-shadow:0 8px 20px #33254b19; font-size:10px; font-weight:700; animation:hub-float 2.8s ease-in-out infinite; }
+        @keyframes device-in { from { opacity:0; transform:perspective(900px) translateY(16px) rotateY(-7deg); } to { opacity:1; transform:perspective(900px) translateY(0) rotateY(-7deg); } }
+        @keyframes phone-in { from { opacity:0; transform:translateY(20px) rotate(5deg); } to { opacity:1; transform:translateY(0) rotate(5deg); } }
+        @keyframes hub-float { 0%,100% { translate:0 0; } 50% { translate:0 -7px; } }
+        .quote-section { padding:100px 7vw; background:#fff; text-align:center; }
+        .quote-section blockquote { max-width:1120px; margin:auto; font-size:clamp(27px,4vw,52px); font-weight:600; letter-spacing:-1.8px; line-height:1.22; }
+        .quote-section p { margin:22px 0 0; color:#858585; font-size:18px; }
+        .mailora-cta { width:min(1320px,92vw); margin:70px auto; padding:56px; border-radius:34px; background:#050506; color:#fff; display:grid; grid-template-columns:1.2fr 1fr; gap:38px; align-items:center; }
+        .mailora-cta h2 { font-size:clamp(32px,4vw,52px); line-height:1.12; letter-spacing:-2px; font-weight:500; }
+        .mailora-cta p { margin-top:18px; color:#b9b9c0; }
+        .cta-points { display:grid; gap:18px; color:#eee; font-size:18px; }
+        .faq-section { width:min(1120px,90vw); margin:0 auto; padding:70px 0 100px; }
+        .faq-section h2 { margin-bottom:34px; font-size:clamp(34px,4vw,52px); letter-spacing:-2px; }
+        .faq-section details { padding:23px 0; border-bottom:1px solid #dedee3; }
+        .faq-section summary { display:flex; justify-content:space-between; gap:20px; cursor:pointer; list-style:none; font-size:20px; }
+        .faq-section summary::-webkit-details-marker { display:none; }
+        .faq-section summary::after { content:'+'; display:grid; width:38px; height:38px; flex:0 0 38px; place-items:center; border-radius:50%; background:#050506; color:#fff; font-size:25px; }
+        .faq-section details[open] summary::after { content:'−'; }
+        .faq-section details p { max-width:850px; margin:16px 55px 0 0; color:#696970; line-height:1.7; }
+        .journey-section { background:#f5f5f6; padding:82px max(5vw, calc((100vw - 1320px)/2)); color:#111; }
+        .journey-section h2 { max-width:760px; margin:0 0 38px; font-size:clamp(32px,4vw,52px); letter-spacing:-2px; line-height:1.08; }
+        .journey-steps { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+        .journey-step { min-height:210px; padding:28px; border-radius:24px; background:#fff; box-shadow:0 8px 28px rgba(20,20,30,.05); }
+        .journey-step b { display:block; margin-bottom:28px; color:#7138e8; font-size:14px; letter-spacing:.08em; }
+        .journey-step h3 { margin-bottom:10px; font-size:21px; }
+        .journey-step p { color:#71717a; line-height:1.65; }
+        .mailora-footer { display:flex; justify-content:space-between; gap:24px; padding:42px 7vw; border-top:1px solid #eee; color:#35353b; }
+        .mailora-footer nav { display:flex; flex-wrap:wrap; gap:28px; }
+        .mailora-footer a { color:inherit; text-decoration:none; }
+        @media(max-width:760px) { .brand-ribbon { justify-content:flex-start; overflow:auto; } .section-wrap { padding:58px 0; } .feature-grid,.mailora-cta { grid-template-columns:1fr; } .feature-grid { gap:38px; } .lower-feature-grid { padding-top:0; } .mailora-cta { padding:34px 26px; margin:46px auto; } .device-stage { padding:65px 6% 28px; } .device-laptop { width:88%; } .device-screen { min-height:166px; padding:9px; } .device-phone { right:6%; bottom:10%; } .device-sync { right:4%; top:23%; } .mailora-footer { flex-direction:column; } .journey-section { padding:58px 5vw; } .journey-steps { grid-template-columns:1fr; } .sticky-email-inner { flex-direction: column; align-items: stretch; gap: 8px; } }
+    </style>
+</head>
+<body>
+
+    <!-- Thanh chạy chuyển trang -->
+    <div id="top-loader"></div>
+
+    <!-- ĐỊNH NGHĨA VECTOR LOGO RIBBON M CỦA MAILORA AI -->
+    <svg width="0" height="0" style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
+        <defs>
+            <linearGradient id="gL1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#c4b5fd" />
+                <stop offset="100%" stop-color="#8b5cf6" />
+            </linearGradient>
+            <linearGradient id="gL2" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#a78bfa" />
+                <stop offset="100%" stop-color="#f3c68f" />
+            </linearGradient>
+            <linearGradient id="gR1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fde047" />
+                <stop offset="100%" stop-color="#f59e0b" />
+            </linearGradient>
+            <linearGradient id="gR2" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#d97706" />
+                <stop offset="100%" stop-color="#fbbf24" />
+            </linearGradient>
+        </defs>
+        <symbol id="mailora-ribbon-m" viewBox="14 18 92 82">
+            <path d="M20 88 L20 32 C20 25 28 22 33 27 L60 54 L49 65 L34 50 L34 88 C34 93 20 93 20 88 Z" fill="url(#gL1)" />
+            <path d="M22 90 L58 54 L69 65 L33 93 C27 97 19 94 22 90 Z" fill="url(#gL2)" />
+            <path d="M100 88 L100 32 C100 25 92 22 87 27 L52 62 C57 67 63 67 68 62 L86 44 L86 88 C86 93 100 93 100 88 Z" fill="url(#gR1)" />
+            <path d="M98 90 L64 56 L53 67 L87 93 C93 97 101 94 98 90 Z" fill="url(#gR2)" />
+            <path d="M23 26 C27 22 32 23 36 27 L64 55 C60 60 54 60 49 55 L23 29 Z" fill="url(#gL2)" />
+            <path d="M97 26 C93 22 88 23 84 27 L54 57 C58 62 64 62 69 57 L97 29 Z" fill="url(#gR1)" />
+        </symbol>
+    </svg>
+
+    <!-- ================= MÀN HÌNH HERO ONBOARDING ================= -->
+    <main class="hero-onboarding-viewport" id="hero-viewport">
+
+        <!-- 1. LỚP NỀN MASONRY CHẠY CHÉO QUA LẠI LẤP KÍN TUYỆT ĐỐI -->
+        <div class="masonry-stage" aria-hidden="true">
+            <div id="masonry-board" class="masonry-tilted-board">
+
+                <!-- CỘT 1 -->
+                <div class="masonry-col-viewport">
+                    <div class="masonry-col-track track-direction-up-1" data-infinite-col>
+                        <div class="wall-card h-[210px]">
+                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80" alt="" class="w-full h-full object-cover opacity-85">
+                        </div>
+                        <div class="wall-card h-[260px] bg-gradient-to-b from-[#cbb6f8] to-[#b399f2] p-5 flex flex-col justify-between text-zinc-900">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-baseline gap-1.5">
+                                    <span class="text-[20px] font-bold tracking-tight text-zinc-900">68.4%</span>
+                                    <span class="text-xs font-bold text-zinc-800">▲</span>
+                                </div>
+                                <span class="text-[11px] font-semibold text-zinc-700">Open Rate</span>
+                            </div>
+                            <div class="relative h-28 w-full flex items-end pt-2">
+                                <svg class="flex-1 h-full overflow-visible" viewBox="0 0 220 85" fill="none">
+                                    <path d="M0 72 C38 70, 58 26, 98 44 C136 60, 168 12, 220 18 L220 85 L0 85 Z" fill="rgba(124, 58, 237, 0.48)"/>
+                                    <path d="M0 72 C38 70, 58 26, 98 44 C136 60, 168 12, 220 18" stroke="#5b21b6" stroke-width="2.5" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="flex justify-between text-[11px] font-medium text-zinc-800 pl-1">
+                                <span>Jun 8</span>
+                                <span>Jun 14</span>
+                            </div>
+                        </div>
+                        <div class="wall-card h-[280px]">
+                            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80" alt="" class="w-full h-full object-cover">
+                        </div>
+                        <div class="wall-card h-[230px]">
+                            <img src="https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=800&q=80" alt="" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CỘT 2 -->
+                <div class="masonry-col-viewport">
+                    <div class="masonry-col-track track-direction-down-1" data-infinite-col>
+                        <div class="wall-card h-[270px] bg-[#3f74b8] relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80" alt="" class="w-full h-full object-cover mix-blend-luminosity opacity-90">
+                            <div class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md rounded-xl p-3 text-zinc-900 shadow-lg">
+                                <span class="text-[10px] font-extrabold uppercase tracking-wider text-purple-700">✦ AI Visual Styles</span>
+                                <p class="text-xs font-bold mt-0.5">Cinematic Dark & Playful Vibrant</p>
+                            </div>
+                        </div>
+                        <div class="wall-card h-[240px] bg-[#c2593f] relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80" alt="" class="w-full h-full object-cover opacity-85">
+                        </div>
+                        <div class="wall-card h-[250px] bg-[#f8fafc] p-5 flex flex-col justify-between text-zinc-900">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs font-bold text-zinc-700">Khung giờ vàng AI</span>
+                                <span class="text-[11px] font-extrabold text-teal-700">10:15 AM ★</span>
+                            </div>
+                            <div class="grid grid-cols-5 gap-2 items-end h-28 pt-4 px-1 border-b border-zinc-200">
+                                <div class="h-12 bg-[#0d9488] rounded-t"></div>
+                                <div class="h-20 bg-[#0f766e] rounded-t"></div>
+                                <div class="h-24 bg-[#115e59] rounded-t"></div>
+                                <div class="h-14 bg-[#0d9488] rounded-t"></div>
+                                <div class="h-18 bg-[#0f766e] rounded-t"></div>
+                            </div>
+                        </div>
+                        <div class="wall-card h-[220px]">
+                            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80" alt="" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CỘT 3 -->
+                <div class="masonry-col-viewport">
+                    <div class="masonry-col-track track-direction-up-2" data-infinite-col>
+                        <div class="wall-card h-[280px] bg-[#f3efe6]">
+                            <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80" alt="" class="w-full h-full object-cover">
+                        </div>
+                        <div class="wall-card h-[240px] bg-[#15803d] relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80" alt="" class="w-full h-full object-cover mix-blend-overlay opacity-75">
+                        </div>
+                        <div class="wall-card h-[290px] bg-[#94a3b8] relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=800&q=80" alt="" class="w-full h-full object-cover">
+                        </div>
+                        <div class="wall-card h-[220px]">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80" alt="" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CỘT 4 -->
+                <div class="masonry-col-viewport">
+                    <div class="masonry-col-track track-direction-down-2" data-infinite-col>
+                        <div class="wall-card h-[285px] bg-[#e6e2d8] p-5 flex flex-col justify-between text-zinc-900">
+                            <div>
+                                <p class="text-[9px] font-bold uppercase tracking-widest text-zinc-500">AI EMAIL STUDIO</p>
+                                <h4 class="text-sm font-extrabold text-zinc-900 tracking-tight mt-0.5">DELUXE CAMPAIGN</h4>
+                                <p class="text-[11px] font-semibold text-zinc-700 mt-0.5">99.4% Primary Inbox</p>
+                            </div>
+                            <div class="space-y-2 my-1.5">
+                                <div class="w-full py-2 rounded border border-zinc-400 text-center text-[10px] font-bold text-zinc-800 bg-white/60">
+                                    TẠO 03 MẪU EMAIL
+                                </div>
+                                <div class="w-full py-2 rounded bg-[#5a31f4] text-center text-[10px] font-bold text-white shadow-sm">
+                                    GỬI VỚI mailora AI
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wall-card h-[260px] bg-[#149694] relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80" alt="" class="w-full h-full object-cover">
+                        </div>
+                        <div class="wall-card h-[235px]">
+                            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80" alt="" class="w-full h-full object-cover">
+                        </div>
+                        <div class="wall-card h-[215px]">
+                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="" class="w-full h-full object-cover opacity-85">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 2. LỚP PHỦ VIGNETTE -->
+        <div class="hero-vignette-overlay" aria-hidden="true"></div>
+
+        <!-- 3. CỤM TRUNG TÂM -->
+        <div class="center-onboarding-stack">
+
+            <!-- Logo mailora AI -->
+            <div class="brand-intro-wrapper" onclick="replayIntroAnimation()" title="Nhấn để phát lại hiệu ứng mở trang">
+                <div class="brand-icon-box">
+                    <img src="./mailora_brand/logo-mark.png" alt="Mailora Logo" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='./mailora-brand/logo-mark.png'; if(!this.complete || this.naturalWidth===0){this.style.display='none'; this.nextElementSibling.style.display='block';}">
+                    <svg class="w-full h-full" style="display:none;"><use href="#mailora-ribbon-m"></use></svg>
+                </div>
+                <div class="brand-wordmark-reveal">
+                    <span class="text-[24px] font-extrabold tracking-tight text-white lowercase leading-none">mailora</span>
+                    <span class="mailora-ai-badge text-[10px] px-2 py-0.5">AI</span>
+                </div>
+            </div>
+
+            <!-- THẺ 1: HỘP TRẮNG PHÍA TRÊN -->
+            <div class="onboarding-white-card">
+                <h1 class="text-[32px] sm:text-[35px] font-medium tracking-[-0.025em] leading-[1.16] text-zinc-950">
+                    Khởi tạo chiến dịch<br/>
+                    cùng mailora AI
+                </h1>
+                <p class="text-[14px] sm:text-[14.5px] text-zinc-600 leading-[1.45] mt-3.5">
+                    Bắt đầu miễn phí, sinh tự động 03 mẫu Email chỉ trong 10 giây.<br/>
+                    Ngoài ra, nhận lên tới 50 Credits+ tín dụng AI khi kích hoạt tài khoản.
+                </p>
+            </div>
+
+            <!-- THẺ 2: HỘP ĐEN KÍNH MỜ PHÍA DƯỚI (Ở KHUNG 1) -->
+            <div class="onboarding-dark-card">
+                <h2 class="text-[18px] font-bold text-white leading-snug">
+                    Bắt đầu miễn phí
+                </h2>
+                <p class="text-[12px] text-zinc-400 mt-0.5 mb-3.5">
+                    Bạn đồng ý nhận email tiếp thị.
+                </p>
+
+                <!-- Form Nhập Email -->
+                <form id="onboarding-email-form" class="relative" onsubmit="submitOnboardingEmail(event, 'onboarding-email-input')" autocomplete="off">
+                    <div class="email-pill-box">
+                        <div class="floating-input-wrap">
+                            <input
+                                id="onboarding-email-input"
+                                type="email"
+                                placeholder=" "
+                                required
+                                class="floating-email-input truncate"
+                            />
+                            <label for="onboarding-email-input" class="floating-email-label">
+                                Nhập email
+                            </label>
+                        </div>
+                        <button type="submit" aria-label="Tiếp tục" class="w-9 h-9 rounded-full flex items-center justify-center text-white hover:bg-white/10 transition-colors shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6l6 6-6 6"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Hộp thoại Autofill 3 dòng -->
+                    <div id="autofill-dropdown" class="autofill-dropdown">
+                        <button type="button" onclick="selectEmailSuggestion('lthuat48611@gmail.com', 'onboarding-email-input')" class="w-full flex items-center gap-3 px-3.5 py-2 hover:bg-white/10 text-left text-[12px] text-zinc-100 transition-colors">
+                            <svg class="w-4 h-4 text-zinc-400 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                <rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>
+                            </svg>
+                            <span class="truncate">lthuat48611@gmail.com</span>
+                        </button>
+                        <button type="button" onclick="selectEmailSuggestion('lopb6868@gmail.com', 'onboarding-email-input')" class="w-full flex items-center gap-3 px-3.5 py-2 hover:bg-white/10 text-left text-[12px] text-zinc-100 transition-colors">
+                            <svg class="w-4 h-4 text-zinc-400 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                <rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>
+                            </svg>
+                            <span class="truncate">lopb6868@gmail.com</span>
+                        </button>
+                        <button type="button" onclick="closeAutofillDropdown()" class="w-full flex items-center gap-3 px-3.5 py-2 hover:bg-white/10 text-left text-[12px] text-zinc-300 transition-colors">
+                            <svg class="w-4 h-4 text-zinc-400 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/>
+                            </svg>
+                            <span>Huỷ thao tác tự động điền</span>
+                        </button>
+                        <div class="border-t border-white/10 my-1"></div>
+                        <button type="button" onclick="closeAutofillDropdown()" class="w-full flex items-center gap-3 px-3.5 py-2 hover:bg-white/10 text-left text-[12px] text-zinc-300 transition-colors">
+                            <svg class="w-4 h-4 text-zinc-400 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                <path d="M12 21s-6-5.33-6-10a6 6 0 1112 0c0 4.67-6 10-6 10z"/><circle cx="12" cy="11" r="2"/>
+                            </svg>
+                            <span>Quản lý địa chỉ...</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- ================= STICKY / FLOATING EMAIL BAR (TỪ KHUNG 2 TRỞ ĐI) ================= -->
+    <div id="sticky-email-bar" class="sticky-email-bar">
+        <div class="sticky-email-inner">
+            <div class="sticky-email-text">
+                <h3>Bắt đầu miễn phí</h3>
+                <p>Khởi tạo chiến dịch ngay hôm nay</p>
+            </div>
+            <div class="sticky-form-wrapper">
+                <form id="sticky-email-form" class="relative" onsubmit="submitOnboardingEmail(event, 'sticky-email-input')" autocomplete="off">
+                    <div class="email-pill-box">
+                        <div class="floating-input-wrap">
+                            <input
+                                id="sticky-email-input"
+                                type="email"
+                                placeholder=" "
+                                required
+                                class="floating-email-input truncate"
+                            />
+                            <label for="sticky-email-input" class="floating-email-label">
+                                Nhập email của bạn
+                            </label>
+                        </div>
+                        <button type="submit" aria-label="Tiếp tục" class="w-9 h-9 rounded-full flex items-center justify-center text-white hover:bg-white/10 transition-colors shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6l6 6-6 6"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Hộp thoại Autofill cho thanh sticky -->
+                    <div id="sticky-autofill-dropdown" class="autofill-dropdown">
+                        <button type="button" onclick="selectEmailSuggestion('lthuat48611@gmail.com', 'sticky-email-input')" class="w-full flex items-center gap-3 px-3.5 py-2 hover:bg-white/10 text-left text-[12px] text-zinc-100 transition-colors">
+                            <svg class="w-4 h-4 text-zinc-400 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                <rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>
+                            </svg>
+                            <span class="truncate">lthuat48611@gmail.com</span>
+                        </button>
+                        <button type="button" onclick="selectEmailSuggestion('lopb6868@gmail.com', 'sticky-email-input')" class="w-full flex items-center gap-3 px-3.5 py-2 hover:bg-white/10 text-left text-[12px] text-zinc-100 transition-colors">
+                            <svg class="w-4 h-4 text-zinc-400 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                <rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>
+                            </svg>
+                            <span class="truncate">lopb6868@gmail.com</span>
+                        </button>
+                        <button type="button" onclick="closeAutofillDropdown()" class="w-full flex items-center gap-3 px-3.5 py-2 hover:bg-white/10 text-left text-[12px] text-zinc-300 transition-colors">
+                            <svg class="w-4 h-4 text-zinc-400 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/>
+                            </svg>
+                            <span>Huỷ thao tác tự động điền</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="mailora-sections">
+        <section class="brand-ribbon" aria-label="Cuộc thi VibeCoding & Hệ thống Giáo dục FPT">
+            <img src="./assets/logos/vibecode.png" alt="Vibe Coding AI Contest" class="brand-logo-item">
+            <img src="./assets/logos/fpt-education.png" alt="FPT Education" class="brand-logo-item">
+            <img src="./assets/logos/fpt-university.png" alt="FPT University" class="brand-logo-item">
+            <img src="./assets/logos/fpt-polytechnic.png" alt="FPT Polytechnic" class="brand-logo-item">
+        </section>
+
+        <section class="section-wrap feature-grid">
+            <article class="feature-card">
+                <div class="feature-visual">
+                    <span class="feature-chip">CHỦ ĐỀ EMAIL TÙY CHỈNH</span>
+                    <div class="theme-wall">
+                        <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&amp;fit=crop&amp;w=800&amp;q=85" alt="Mẫu email thời trang">
+                        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&amp;fit=crop&amp;w=800&amp;q=85" alt="Mẫu email sản phẩm">
+                        <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&amp;fit=crop&amp;w=800&amp;q=85" alt="Mẫu email nội thất">
+                    </div>
+                </div>
+                <h2>Tạo email tuyệt đẹp trong tích tắc</h2>
+                <p>Các thiết kế xây dựng sẵn giúp khởi chạy chiến dịch thương hiệu nhanh chóng và dễ dàng.</p>
+            </article>
+            <article class="feature-card">
+                <div class="feature-visual">
+                    <span class="feature-chip">NHẬN THÊM CREDITS AI</span>
+                    <div class="sales-widget"><small>Doanh số được hỗ trợ</small><strong>700.000 US$</strong>
+                        <svg class="sales-curve" viewBox="0 0 500 260" preserveAspectRatio="none"><defs><linearGradient id="salesFill" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#65c9f5" stop-opacity=".75"/><stop offset="1" stop-color="#65c9f5" stop-opacity="0"/></linearGradient></defs><path d="M0 220 C100 210 145 145 230 160 S370 55 500 40 V260 H0Z" fill="url(#salesFill)"/><path d="M0 220 C100 210 145 145 230 160 S370 55 500 40" fill="none" stroke="#16a8eb" stroke-width="4"/></svg>
+                    </div>
+                    <div class="credit-widget"><small>Credits AI của bạn</small><strong>+50 Credits</strong></div>
+                </div>
+                <h2>Chiến dịch tạo giá trị</h2>
+                <p>Biến hiệu quả email thành tăng trưởng, đồng thời nhận thêm Credits để tiếp tục sáng tạo.</p>
+            </article>
+        </section>
+
+        <section class="section-wrap feature-grid lower-feature-grid">
+            <article class="feature-card">
+                <div class="assistant-preview">
+                    <span class="feature-chip">KHÁM PHÁ MAILORA AI</span>
+                    <div class="assistant-bubble">✦<b>Chào bạn,<br/>tôi có thể giúp gì?</b></div>
+                </div>
+                <h2>Nâng tầm cùng trợ lý AI</h2>
+                <p>Thỏa sức phát triển với trợ lý tích hợp sẵn. Tạo nội dung, điều chỉnh giọng điệu và hoàn thiện chiến dịch chỉ trong vài bước.</p>
+            </article>
+            <article class="feature-card">
+                <div class="channel-visual">
+                    <span class="feature-chip">MAILORA TRÊN MỌI THIẾT BỊ</span>
+                    <div class="device-stage" aria-label="Bản xem trước Mailora trên laptop và điện thoại">
+                        <div class="device-laptop"><div class="device-screen"><div class="device-topbar"><i></i><i></i><i></i> mailora.app</div><div class="device-mail"><small>CHIẾN DỊCH EMAIL · BẢN NHÁP</small><b>Ưu đãi dành riêng cho bạn</b><small>Nội dung được đồng bộ trên web, iOS và các kênh bán hàng.</small><br><em>Gửi chiến dịch →</em></div></div><div class="device-base"></div></div>
+                        <div class="device-phone"><div class="device-phone-screen"><small>9:41　•••</small><b>Ưu đãi mới ✨</b><small>Mở email để khám phá bộ sưu tập mới nhất.</small><i></i></div></div>
+                        <div class="device-sync">↔ Đồng bộ tức thì</div>
+                    </div>
+                </div>
+                <h2>Làm việc liền mạch trên mọi thiết bị</h2>
+                <p>Quản lý chiến dịch trên laptop hoặc iPhone, xem trước nội dung trên màn hình nhỏ và giữ trải nghiệm nhất quán trên web, iOS cùng các kênh khách hàng yêu thích.</p>
+            </article>
+        </section>
+
+        <section class="journey-section">
+            <h2>Từ ý tưởng đầu tiên đến chiến dịch sẵn sàng gửi</h2>
+            <div class="journey-steps">
+                <article class="journey-step"><b>01 · BẮT ĐẦU</b><h3>Chọn mục tiêu</h3><p>Giới thiệu sản phẩm, ưu đãi hoặc câu chuyện thương hiệu bạn muốn chia sẻ.</p></article>
+                <article class="journey-step"><b>02 · SÁNG TẠO</b><h3>Để AI tạo bản nháp</h3><p>Mailora gợi ý tiêu đề, nội dung và bố cục email phù hợp với chiến dịch.</p></article>
+                <article class="journey-step"><b>03 · PHÁT TRIỂN</b><h3>Cá nhân hóa và theo dõi</h3><p>Tinh chỉnh thông điệp cho khách hàng, rồi theo dõi kết quả để cải thiện lần gửi tiếp theo.</p></article>
+            </div>
+        </section>
+
+        <section class="quote-section">
+            <blockquote>“Mailora giúp chúng tôi tạo chiến dịch phù hợp nhanh hơn và chăm sóc khách hàng nhất quán trên mọi kênh.”</blockquote>
+            <p>Đội ngũ sáng lập · Khách hàng Mailora</p>
+        </section>
+
+        <section class="mailora-cta">
+            <div><h2>Bán hàng hiệu quả cùng Mailora AI</h2><p>Bắt đầu miễn phí và tạo chiến dịch đầu tiên ngay hôm nay.</p></div>
+            <div class="cta-points"><span>✓ Tạo 03 mẫu email bằng AI</span><span>✓ Cá nhân hóa theo từng khách hàng</span><span>✓ Theo dõi hiệu quả chiến dịch</span></div>
+        </section>
+
+        <section class="faq-section">
+            <h2>Bạn có câu hỏi?</h2>
+            <details><summary>Mailora AI giúp tôi làm gì?</summary><p>Mailora hỗ trợ tạo, cá nhân hóa và quản lý chiến dịch email bằng các công cụ AI.</p></details>
+            <details><summary>Tôi có cần kinh nghiệm thiết kế email không?</summary><p>Không. Chọn mẫu có sẵn, nhập thông tin thương hiệu và để Mailora giúp bạn hoàn thiện nội dung.</p></details>
+            <details><summary>Tôi có thể kết nối cửa hàng trực tuyến không?</summary><p>Mailora được thiết kế để đồng hành cùng các cửa hàng và chiến dịch bán hàng đa kênh.</p></details>
+            <details><summary>Credits AI được sử dụng như thế nào?</summary><p>Credits dùng cho các tính năng tạo và chỉnh sửa nội dung bằng AI trong tài khoản Mailora.</p></details>
+        </section>
+
+        <footer class="mailora-footer"><strong>mailora AI</strong><nav><a href="#">Điều khoản dịch vụ</a><a href="#">Chính sách bảo mật</a><a href="#">Sơ đồ trang web</a><a href="#">Liên hệ</a></nav></footer>
+    </div>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        "use strict";
+
+        const emailInput = document.getElementById("onboarding-email-input");
+        const stickyEmailInput = document.getElementById("sticky-email-input");
+        const autofillDropdown = document.getElementById("autofill-dropdown");
+        const stickyAutofillDropdown = document.getElementById("sticky-autofill-dropdown");
+        const stickyBar = document.getElementById("sticky-email-bar");
+        const heroViewport = document.getElementById("hero-viewport");
+        const topLoader = document.getElementById("top-loader");
+
+        // Nhân đôi các thẻ trong cột để tạo vòng lặp vô tận lấp kín màn hình
+        function setupInfiniteDiagonalColumns() {
+            const columns = document.querySelectorAll("[data-infinite-col]");
+            columns.forEach((col) => {
+                if (col.dataset.cloned === "true") return;
+                const children = Array.from(col.children);
+                children.forEach((card) => {
+                    const clone = card.cloneNode(true);
+                    clone.setAttribute("aria-hidden", "true");
+                    col.appendChild(clone);
+                });
+                col.dataset.cloned = "true";
+            });
+        }
+
+        function triggerIntroChoreography() {
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    document.body.classList.add("is-loaded");
+                }, 40);
+            });
+        }
+
+        function replayIntroAnimation() {
+            closeAutofillDropdown();
+            document.body.classList.remove("is-loaded");
+            void document.body.offsetWidth;
+            setTimeout(() => {
+                document.body.classList.add("is-loaded");
+            }, 120);
+        }
+
+        // Xử lý cuộn trang để hiện thanh sticky từ khung 2 trở đi
+        function handleScrollStickyBar() {
+            if (!heroViewport || !stickyBar) return;
+            const heroHeight = heroViewport.offsetHeight;
+            const scrollPos = window.scrollY || window.pageYOffset;
+
+            // Khi lướt qua hết khung 1 (heroHeight - 50px), box đen sẽ trượt lên từ dưới
+            if (scrollPos > heroHeight - 80) {
+                stickyBar.classList.add("is-visible");
+            } else {
+                stickyBar.classList.remove("is-visible");
+                closeAutofillDropdown();
+            }
+        }
+
+        window.addEventListener("scroll", handleScrollStickyBar, { passive: true });
+
+        // Xử lý sự kiện input autofill cho cả 2 form & đồng bộ dữ liệu nhập
+        if (emailInput) {
+            if (autofillDropdown) {
+                emailInput.addEventListener("focus", () => {
+                    autofillDropdown.classList.add("is-open");
+                });
+                emailInput.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    autofillDropdown.classList.add("is-open");
+                });
+            }
+            emailInput.addEventListener("input", () => {
+                if (stickyEmailInput) stickyEmailInput.value = emailInput.value;
+                if (emailInput.value.trim().length > 0) {
+                    closeAutofillDropdown();
+                }
+            });
+        }
+
+        if (stickyEmailInput) {
+            if (stickyAutofillDropdown) {
+                stickyEmailInput.addEventListener("focus", () => {
+                    stickyAutofillDropdown.classList.add("is-open");
+                });
+                stickyEmailInput.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    stickyAutofillDropdown.classList.add("is-open");
+                });
+            }
+            stickyEmailInput.addEventListener("input", () => {
+                if (emailInput) emailInput.value = stickyEmailInput.value;
+                if (stickyEmailInput.value.trim().length > 0) {
+                    closeAutofillDropdown();
+                }
+            });
+        }
+
+        document.addEventListener("click", (e) => {
+            if (!e.target.closest("#onboarding-email-form") && !e.target.closest("#sticky-email-form")) {
+                closeAutofillDropdown();
+            }
+        });
+
+        function selectEmailSuggestion(email, inputId) {
+            const targetInput = document.getElementById(inputId);
+            if (targetInput) {
+                targetInput.value = email;
+                targetInput.focus();
+            }
+            if (emailInput) emailInput.value = email;
+            if (stickyEmailInput) stickyEmailInput.value = email;
+            closeAutofillDropdown();
+        }
+
+        function closeAutofillDropdown() {
+            autofillDropdown?.classList.remove("is-open");
+            stickyAutofillDropdown?.classList.remove("is-open");
+        }
+
+        function submitOnboardingEmail(e, inputId) {
+            if (e) e.preventDefault();
+            const targetInput = document.getElementById(inputId);
+            const emailVal = targetInput ? targetInput.value.trim() : "";
+
+            if (!emailVal) {
+                if (targetInput) targetInput.focus();
+                return;
+            }
+
+            closeAutofillDropdown();
+
+            // Đồng bộ vào localStorage để sign_up.html sử dụng
+            try {
+                const prevIntent = JSON.parse(localStorage.getItem("mailora_pending_intent") || "{}");
+                localStorage.setItem("mailora_pending_intent", JSON.stringify({
+                    ...prevIntent,
+                    prefillEmail: emailVal,
+                    timestamp: Date.now()
+                }));
+                localStorage.setItem("mailora_signup_email", emailVal);
+            } catch (_) {}
+
+            if (topLoader) topLoader.style.width = "100%";
+
+            // Chuyển hướng sang sign_up.html và truyền email qua query param & localStorage
+            setTimeout(() => {
+                window.location.href = `sign_up.html?email=${encodeURIComponent(emailVal)}`;
+            }, 250);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            setupInfiniteDiagonalColumns();
+            triggerIntroChoreography();
+            handleScrollStickyBar();
+
+            // Khôi phục email từ query param hoặc localStorage nếu có
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const queryEmail = urlParams.get("email");
+                const savedEmail = queryEmail || localStorage.getItem("mailora_signup_email") || (JSON.parse(localStorage.getItem("mailora_pending_intent") || "{}").prefillEmail);
+                if (savedEmail) {
+                    if (emailInput) emailInput.value = savedEmail;
+                    if (stickyEmailInput) stickyEmailInput.value = savedEmail;
+                }
+            } catch (_) {}
+        });
+    </script>
+</body>
+</html>

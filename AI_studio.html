@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mailora AI — Creative Atelier Redirect</title>
+  <link rel="icon" type="image/png" href="./mailora_brand/favicon.png" />
+  <link rel="shortcut icon" href="./mailora_brand/favicon.ico" />
+  <link rel="apple-touch-icon" href="./mailora_brand/apple-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at 50% 30%, #1e1b4b 0%, #0b0c14 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .lavender-pulse-ring {
+      width: 56px;
+      height: 56px;
+      border: 3.5px solid rgba(167, 139, 250, 0.2);
+      border-top-color: #a78bfa;
+      border-right-color: #c084fc;
+      border-radius: 50%;
+      animation: atelier-spin 0.85s linear infinite;
+    }
+    @keyframes atelier-spin {
+      to { transform: rotate(360deg); }
+    }
+    .mailora-ai-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(90deg, #b993fe 0%, #f4be58 55%, #f5a623 100%);
+      color: #0b132b;
+      font-weight: 800;
+      border-radius: 9999px;
+      line-height: 1;
+      padding: 2px 8px;
+      font-size: 9px;
+    }
+  </style>
+</head>
+<body>
+  <div style="display:flex; flex-direction:column; align-items:center; gap:16px; text-align:center; padding:24px;">
+    <div style="position:relative; display:flex; align-items:center; justify-content:center;">
+      <div class="lavender-pulse-ring"></div>
+      <div style="position:absolute; width:28px; height:28px; border-radius:10px; background:linear-gradient(135deg, #6655E8, #4F39F6); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:900; color:#fff;">
+        M
+      </div>
+    </div>
+    <div>
+      <div style="font-size:16px; font-weight:800; display:flex; align-items:center; justify-content:center; gap:6px;">
+        <span>mailora</span>
+        <span class="mailora-ai-badge">AI</span>
+        <span style="color:#a1a1aa; font-weight:400; font-size:12px; margin-left:4px;">· Creative Atelier</span>
+      </div>
+      <p id="route-status" style="font-size:12px; color:#ddd6fe; margin-top:6px; font-weight:500;">
+        Đang định tuyến không gian làm việc Studio...
+      </p>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      try {
+        const sessionStr = localStorage.getItem('mailora_active_session');
+        const session = sessionStr ? JSON.parse(sessionStr) : null;
+        const now = Date.now();
+        const TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchStr = window.location.search || '';
+
+        if (!session || !session.email || (session.loggedInAt && (now - session.loggedInAt > TTL_MS))) {
+          document.getElementById('route-status').textContent = 'Yêu cầu đăng nhập. Đang chuyển về Trang chủ...';
+          const prompt = urlParams.get('prompt');
+          if (prompt) sessionStorage.setItem('mailora_pending_prompt', prompt);
+          setTimeout(function() {
+            window.location.replace('/index.html');
+          }, 300);
+        } else {
+          document.getElementById('route-status').textContent = 'Xác thực thành công. Đang mở Studio...';
+          setTimeout(function() {
+            window.location.replace('/AI_creative_studio.html' + searchStr);
+          }, 300);
+        }
+      } catch (err) {
+        window.location.replace('/index.html');
+      }
+    })();
+  </script>
+</body>
+</html>
