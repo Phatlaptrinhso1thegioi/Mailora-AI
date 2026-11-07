@@ -1794,8 +1794,19 @@
     // =========================================================================
     // 1. QUẢN LÝ BẢO MẬT API KEY & PROXY (KHÔNG HARDCODE KEY TRONG CODE)
     // =========================================================================
-    const DEFAULT_GEMINI_KEY = typeof __VERCEL_GEMINI_KEY__ !== "undefined" ? __VERCEL_GEMINI_KEY__ : "";
-    let activeApiKey = sessionStorage.getItem("mailora_gemini_api_key") || localStorage.getItem("mailora_gemini_api_key") || DEFAULT_GEMINI_KEY;
+    const DEFAULT_GEMINI_KEY = (typeof window !== "undefined" && window.__VERCEL_GEMINI_KEY__)
+      ? window.__VERCEL_GEMINI_KEY__
+      : (typeof __VERCEL_GEMINI_KEY__ !== "undefined" && __VERCEL_GEMINI_KEY__ !== "__VERCEL_GEMINI_KEY__" ? __VERCEL_GEMINI_KEY__ : "");
+
+    function getValidKey() {
+      const s = (sessionStorage.getItem("mailora_gemini_api_key") || "").trim();
+      if (s && s !== "undefined" && s !== "null" && s.length > 5) return s;
+      const l = (localStorage.getItem("mailora_gemini_api_key") || "").trim();
+      if (l && l !== "undefined" && l !== "null" && l.length > 5) return l;
+      return DEFAULT_GEMINI_KEY;
+    }
+
+    let activeApiKey = getValidKey();
     let activeProxyUrl = localStorage.getItem("mailora_gemini_proxy_url") || "";
     let isGeneratingLock = false;
     const responseCache = new Map();

@@ -2,14 +2,39 @@ import { resolve } from 'path';
 import { defineConfig, loadEnv } from 'vite';
 
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), ['VITE_', 'GEMINI_']);
-  const geminiKey = process.env.VITE_GEMINI_API_KEY || process.env.GEMINI_API_KEY || env.VITE_GEMINI_API_KEY || env.GEMINI_API_KEY || '';
+  const env = loadEnv(mode, process.cwd(), ['VITE_', 'GEMINI_', 'API_']);
+  const geminiKey = (
+    process.env.VITE_GEMINI_API_KEY ||
+    process.env.GEMINI_API_KEY ||
+    process.env.VITE_GEMINI_KEY ||
+    process.env.GEMINI_KEY ||
+    process.env.API_KEY ||
+    env.VITE_GEMINI_API_KEY ||
+    env.GEMINI_API_KEY ||
+    env.VITE_GEMINI_KEY ||
+    env.GEMINI_KEY ||
+    env.API_KEY ||
+    ''
+  ).trim();
 
   return {
+    plugins: [
+      {
+        name: 'html-transform-gemini-key',
+        transformIndexHtml(html) {
+          if (!geminiKey) return html;
+          const scriptTag = `<script>window.__VERCEL_GEMINI_KEY__ = ${JSON.stringify(geminiKey)};</script>`;
+          if (html.includes('<head>')) {
+            return html.replace('<head>', `<head>\n    ${scriptTag}`);
+          }
+          return `${scriptTag}\n${html}`;
+        }
+      }
+    ],
     define: {
       '__VERCEL_GEMINI_KEY__': JSON.stringify(geminiKey)
     },
-    envPrefix: ['VITE_', 'GEMINI_'],
+    envPrefix: ['VITE_', 'GEMINI_', 'API_'],
     root: '.',
     publicDir: 'public',
     server: {

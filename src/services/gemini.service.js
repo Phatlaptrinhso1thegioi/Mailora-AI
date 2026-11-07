@@ -12,14 +12,22 @@ import { getAppMode } from '../config/supabase.config.js';
 import { generateAdaptiveCampaignLocally } from '../modules/ai/adaptive-engine.js';
 import { generateId } from '../utils/security.js';
 
-export const DEFAULT_GEMINI_KEY = import.meta.env?.VITE_GEMINI_API_KEY || import.meta.env?.GEMINI_API_KEY || '';
+export const DEFAULT_GEMINI_KEY =
+  (typeof window !== 'undefined' && window.__VERCEL_GEMINI_KEY__) ||
+  import.meta.env?.VITE_GEMINI_API_KEY ||
+  import.meta.env?.GEMINI_API_KEY ||
+  '';
 
 class GeminiService {
   getActiveApiKey() {
+    const local = localStorage.getItem('mailora_gemini_api_key')?.trim();
+    if (local && local.length > 5 && local !== 'undefined' && local !== 'null') return local;
+    const session = sessionStorage.getItem('mailora_gemini_api_key')?.trim();
+    if (session && session.length > 5 && session !== 'undefined' && session !== 'null') return session;
     return (
-      localStorage.getItem('mailora_gemini_api_key') ||
-      sessionStorage.getItem('mailora_gemini_api_key') ||
-      import.meta.env.VITE_GEMINI_API_KEY ||
+      (typeof window !== 'undefined' && window.__VERCEL_GEMINI_KEY__) ||
+      import.meta.env?.VITE_GEMINI_API_KEY ||
+      import.meta.env?.GEMINI_API_KEY ||
       DEFAULT_GEMINI_KEY
     );
   }

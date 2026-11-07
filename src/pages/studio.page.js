@@ -96,8 +96,9 @@ export async function initStudioPage() {
   bindGlobalStudioHandlers(header, sidebar);
 
   // Pre-seed Gemini API Key from environment if available
-  if (!localStorage.getItem('mailora_gemini_api_key') && import.meta.env?.VITE_GEMINI_API_KEY) {
-    localStorage.setItem('mailora_gemini_api_key', import.meta.env.VITE_GEMINI_API_KEY);
+  const envKey = (typeof window !== 'undefined' && window.__VERCEL_GEMINI_KEY__) || import.meta.env?.VITE_GEMINI_API_KEY || import.meta.env?.GEMINI_API_KEY || '';
+  if (!localStorage.getItem('mailora_gemini_api_key') && envKey) {
+    localStorage.setItem('mailora_gemini_api_key', envKey);
   }
 
   // 6. Setup Device & View Mode Toggles
@@ -681,7 +682,11 @@ function bindGlobalStudioHandlers(header, sidebar) {
     const keyInput = document.getElementById('modal-apikey-input');
     const proxyInput = document.getElementById('modal-proxy-input');
     if (keyInput) {
-      keyInput.value = localStorage.getItem('mailora_gemini_api_key') || sessionStorage.getItem('mailora_gemini_api_key') || (import.meta.env?.VITE_GEMINI_API_KEY || '');
+      keyInput.value =
+        localStorage.getItem('mailora_gemini_api_key') ||
+        sessionStorage.getItem('mailora_gemini_api_key') ||
+        (typeof window !== 'undefined' && window.__VERCEL_GEMINI_KEY__) ||
+        (import.meta.env?.VITE_GEMINI_API_KEY || import.meta.env?.GEMINI_API_KEY || '');
     }
     if (proxyInput) {
       proxyInput.value = localStorage.getItem('mailora_gemini_proxy_url') || '';
