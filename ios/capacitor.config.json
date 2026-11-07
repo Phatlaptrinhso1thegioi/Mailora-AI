@@ -1,0 +1,19 @@
+{
+  "appId": "ai.mailora.ios",
+  "appName": "Mailora.ai",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "ios": {
+    "contentInset": "always",
+    "scheme": "Mailora",
+    "preferredContentMode": "mobile"
+  },
+  "server": {
+    "cleartext": false,
+    "allowNavigation": [
+      "*.supabase.co",
+      "*.pollinations.ai",
+      "images.unsplash.com"
+    ]
+  }
+}
