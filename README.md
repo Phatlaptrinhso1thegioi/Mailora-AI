@@ -11,9 +11,9 @@
 | Tên đội thi | **Đội 001** |
 | Bảng thi | **Bảng A - Công nghệ** |
 | Đề bài bốc thăm | **Đề số 06 — Trình tạo Email Marketing bằng AI** |
-| Demo online | `None` *(Chạy trực tiếp từ mã nguồn local tại `http://localhost:3000`)* |
-| Video demo (≤ 02 phút) | `None` *(Sẽ bổ sung liên kết trước thời hạn nộp bài)* |
-| Source ZIP | `None` *(Đóng gói theo hướng dẫn bàn giao)* |
+| Demo online | `https://mailora-ai-psi.vercel.app/` *(Chạy trực tiếp từ mã nguồn local tại `http://localhost:3000`)* |
+| Video demo (≤ 02 phút) | `https://drive.google.com/file/d/1gJVrl3OELBJqpT-fBzI92Y96G0KeuWr-/view?usp=sharing` |
+| Source ZIP | `https://github.com/Phatlaptrinhso1thegioi/Mailora-AI` *(Đóng gói theo hướng dẫn bàn giao)* |
 | Minh chứng dùng AI | Kèm trong mục 10 của README và thư mục `docs/` |
 | Bảng kiểm thử | Kèm trong mục 11 của README (6 ca kiểm thử chuẩn Bảng A) và 18 automated tests trong `tests/` |
 
@@ -266,7 +266,7 @@ Quá trình xây dựng Mailora.ai được đội thi thực hiện thông qua 
    - Đóng gói toàn bộ mã nguồn sạch, thư mục `src/`, `tests/`, `public/`, `supabase/` và tệp cấu hình.
    - Không chứa bất kỳ thông tin nhạy cảm, khoá API bí mật hay mật khẩu thật nào trong bài nộp.
 2. **Video Demo (≤ 02 phút):**
-   - `None` *(Sẽ bổ sung liên kết trước thời hạn nộp bài)*
+   - `https://drive.google.com/file/d/1gJVrl3OELBJqpT-fBzI92Y96G0KeuWr-/view?usp=sharing`
 3. **Minh chứng Vibe Coding & Bảng kiểm thử:**
    - Đầy đủ tại Mục 10 và Mục 11 của tệp README này.
    - Đi kèm bộ 18 test cases tự động có thể chạy lại bất cứ lúc nào qua lệnh `npm test`.
