@@ -12,7 +12,7 @@
 | Bảng thi | **Bảng A - Công nghệ** |
 | Đề bài bốc thăm | **Đề số 06 — Trình tạo Email Marketing bằng AI** |
 | Demo online | `https://mailora-ai-psi.vercel.app/` *(Chạy trực tiếp từ mã nguồn local tại `http://localhost:3000`)* |
-| Video demo (≤ 02 phút) | `https://drive.google.com/file/d/1gJVrl3OELBJqpT-fBzI92Y96G0KeuWr-/view?usp=sharing` |
+| Video demo (≤ 02 phút) | `https://drive.google.com/file/d/1snBFoEKr0qF1Zivj8XegAy7MSp77SURb/view?usp=sharing` |
 | Source ZIP | `https://github.com/Phatlaptrinhso1thegioi/Mailora-AI` *(Đóng gói theo hướng dẫn bàn giao)* |
 | Minh chứng dùng AI | Kèm trong mục 10 của README và thư mục `docs/` |
 | Bảng kiểm thử | Kèm trong mục 11 của README (6 ca kiểm thử chuẩn Bảng A) và 18 automated tests trong `tests/` |
